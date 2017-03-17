@@ -11,16 +11,7 @@ int main(void)
     	USBDevice.attach();
 	#endif
 	System ab = System();
-
 	ab.boot();
-
-	while(1)
-	{  
-		if (ab.nextFrame())
-		{
-			ab.pollButtons();
-
-			ab.display();
-		}
-	}
+	
+	ab.step();
 }
