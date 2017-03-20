@@ -1,17 +1,24 @@
 /*
 (slightly) Faster than Light
 */
-#include <Arduboy2.h>
 #include "system.h"
+#include "game.h"
+System ab;
+Game game(ab);
 
-int main(void)
+void setup()
 {
-	init();
-	#ifdef USBCON
-    	USBDevice.attach();
-	#endif
-	System ab = System();
-	ab.boot();
-	
-	ab.step();
+	ab.begin();	
+}
+
+void loop()
+{	
+	if(!ab.nextFrame())
+		return;
+	ab.pollButtons();
+
+	game.step();
+	game.draw();
+
+	ab.display();
 }

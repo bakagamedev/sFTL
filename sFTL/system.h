@@ -3,22 +3,5 @@
 
 class System : public Arduboy2
 {
-	private:
-		
-	public:
-		void step();
+	//stick stuff here
 };
-
-void System::step()
-{
-	while(1)
-	{
-		if (!this->nextFrame())
-			return;
-		this->pollButtons();
-
-		this->drawPixel(64,32,WHITE);
-			
-		this->display();
-	}
-}
