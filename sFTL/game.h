@@ -22,7 +22,8 @@ public:
 
 Game::Game(System & ab)
 {
-	this-> ab = &ab;
+	this->ab = &ab;
+	playerShip.ab = &ab;
 	playerShip.setType(ShipType::kestrel);
 };
 
@@ -43,6 +44,8 @@ void Game::step()
 
 	if(page<0)	page = 0;
 	if(page>3)	page = 3;
+
+	playerShip.step();
 };
 
 void Game::draw()
@@ -50,7 +53,7 @@ void Game::draw()
 	ab->clear();
 	drawBar();
 
-	playerShip.draw(ab,selected-1);
+	playerShip.draw(selected-1);
 };
 
 void Game::drawBar()

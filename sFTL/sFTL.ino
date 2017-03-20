@@ -1,5 +1,5 @@
 /*
-(slightly) Faster than Light
+(slightly)Faster than Light
 */
 #include "system.h"
 #include "game.h"
@@ -20,5 +20,7 @@ void loop()
 	game.step();
 	game.draw();
 
+	ab.setCursor(0,0);
+	ab.print("1");
 	ab.display();
 }
