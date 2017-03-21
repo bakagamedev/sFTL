@@ -24,6 +24,6 @@ void loop()
 	ab.setCursor(0,0);
 	//ab.print(game.warp);
 
-  	Serial.write(ab.getBuffer(), 128 * 64 / 8);
+  	//Serial.write(ab.getBuffer(), 128 * 64 / 8);
 	ab.display();
 }

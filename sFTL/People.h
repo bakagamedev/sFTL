@@ -1,5 +1,6 @@
 #pragma once
 #include "types.h"
+#include "list.h"
 #include "system.h"
 #include "ship.h"
 
@@ -21,7 +22,7 @@ public:
 	int8_t hp = 100;
 	bool alive = false;
 
-	Peep(Ship &ship);
+	Peep(System &ab,Ship &ship);
 	Species getSpecies();
 	void setPos(uint8_t x,uint8_t y);
 	Point getPos();
@@ -29,9 +30,12 @@ public:
 	void reset();
 	void draw(System *ab);
 };
-Peep::Peep(Ship &ship)
+using PeepList = List<Peep, 10>;
+
+Peep::Peep(System &ab,Ship &ship);
 {
-	this->ship = &ship;
+	this->ab = &ab;
+	this->ship = &ship;	
 	alive = true;
 	reset();
 };
@@ -79,15 +83,11 @@ void Peep::draw(System *ab)
 
 class PeepControl
 {
-private:
 public:
 	Ship *ship;
 	System *ab;
 	PeepControl();
-
-	//uint8_t peepmax = 10;
-	uint8_t peepmax;
-	Peep peeps[10];
+	PeepList peeps;
 
 	uint8_t add();
 	void kill(uint8_t id);
@@ -96,7 +96,7 @@ public:
 	void step();
 	void draw();
 };
-PeepControl::PeepControl();
+PeepControl::PeepControl()	{};
 
 void PeepControl::setup(System &ab,Ship &ship)
 {
@@ -105,26 +105,19 @@ void PeepControl::setup(System &ab,Ship &ship)
 	Q) Shouldn't this be in a constructor?
 	A) Great question! Yes it should!
 	*/
+	peepmax = 10;
 	this->ab = &ab;
 	this->ship = &ship;
 	for(uint8_t p=0; p<10; ++p)
 	{
 		peeps[p].ab = &ab;
+		peeps[p].ship = &ship;
 	}
 }
 
 uint8_t PeepControl::add()
 {
-	peepmax = 10;
-	for(uint8_t p=0; p<peepmax; ++p)
-	{
-		if(peeps[p].alive == false)
-		{
-			peeps[p].alive = true;
-			peeps[p].reset();
-			return p;
-		}
-	}
+	peeps.add(Peep(ab,ship));
 	return 255;
 };
 

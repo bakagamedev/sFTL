@@ -20,7 +20,7 @@ private:
 	void drawBar();
 	void input();
 public:
-	uint8_t warp=0;
+	int8_t warp=0;
 
 	Game(System & ab);
 	void step();
@@ -40,10 +40,11 @@ Game::Game(System & ab)
 
 void Game::step()
 {
-	if(warp>0) 
+	if(warp!=0)
 	{	
-		warp++;	
-		if(warp>128) warp = 0;
+		warp++;
+		if(warp==127)
+			initStars();
 	}
 
 	if(page==0)
