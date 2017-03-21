@@ -9,6 +9,7 @@ Game game(ab);
 void setup()
 {
 	ab.begin();	
+  	Serial.begin(9600);
 }
 
 void loop()
@@ -21,6 +22,8 @@ void loop()
 	game.draw();
 
 	ab.setCursor(0,0);
-	ab.print("1");
+	//ab.print(game.warp);
+
+  	Serial.write(ab.getBuffer(), 128 * 64 / 8);
 	ab.display();
 }

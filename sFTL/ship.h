@@ -44,13 +44,15 @@ public:
 	void setType(ShipType type);
 
 	void step();
-	void draw(int8_t selected);
+	void draw(int8_t selected,uint8_t offset);
 
-	uint8_t roomFromPoint(Point pos);
+	uint8_t roomIDFromPoint(Point pos);
+	ShipRoom roomFromID(uint8_t id);
 };
 
 Ship::Ship()
 {
+
 };
 
 void Ship::step()
@@ -79,26 +81,34 @@ void Ship::setType(ShipType type)
 	rooms[6].shape.set(0,0,48,16);		//Left Strut
 };
 
-ShipRoom Ship::roomFromPoint(Point pos)
+uint8_t Ship::roomIDFromPoint(Point pos)
 {
 	for(uint8_t i=0; i<roomNum; ++i)
 	{
 		Rectangle shape = rooms[i].shape;
 		if(ab->collide(pos,shape))
-			return room[i];
+			return i;
 	}
+	return 255;
 }
 
-void Ship::draw(int8_t selected)
+ShipRoom Ship::roomFromID(uint8_t id)
+{
+	if(id<roomNum)
+		return rooms[id];
+	return rooms[0];
+}
+
+void Ship::draw(int8_t selected,uint8_t offset)
 {
 	for(uint8_t i=0; i<roomNum; ++i)
 	{
 		Rectangle shape = rooms[i].shape;
-		ab->drawRect(shape.x,shape.y,shape.width,shape.height,1);
+		ab->drawRect(offset+shape.x,shape.y,shape.width,shape.height,1);
 
 		if(selected==i)
 		{
-			ab->drawRect(shape.x+2,shape.y+2,shape.width-4,shape.height-4,1);
+			ab->drawRect(offset+shape.x+2,shape.y+2,shape.width-4,shape.height-4,1);
 		}
 	}
 };
