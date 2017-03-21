@@ -30,15 +30,15 @@ public:
 	void reset();
 	void draw(System *ab);
 };
-using PeepList = List<Peep, 10>;
+using PeepList = List<Peep, 10>;	
 
-Peep::Peep(System &ab,Ship &ship);
+Peep::Peep(System &ab,Ship &ship)
 {
 	this->ab = &ab;
 	this->ship = &ship;	
 	alive = true;
 	reset();
-};
+}
 
 void Peep::update()
 {
@@ -83,11 +83,13 @@ void Peep::draw(System *ab)
 
 class PeepControl
 {
-public:
+private:
 	Ship *ship;
 	System *ab;
-	PeepControl();
 	PeepList peeps;
+
+public:
+	PeepControl();
 
 	uint8_t add();
 	void kill(uint8_t id);

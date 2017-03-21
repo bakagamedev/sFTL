@@ -44,7 +44,7 @@ public:
 	void setType(ShipType type);
 
 	void step();
-	void draw(int8_t selected,uint8_t offset);
+	void draw(int8_t selected,int8_t offset);
 
 	uint8_t roomIDFromPoint(Point pos);
 	ShipRoom roomFromID(uint8_t id);
@@ -64,7 +64,7 @@ void Ship::step()
 	{
 		shield += rooms[2].functional;
 	}
-};
+}
 
 void Ship::setType(ShipType type)
 {
@@ -89,16 +89,16 @@ uint8_t Ship::roomIDFromPoint(Point pos)
 			return i;
 	}
 	return 255;
-};
+}
 
 ShipRoom Ship::roomFromID(uint8_t id)
 {
 	if(id<roomNum)
 		return rooms[id];
 	return rooms[0];
-};
+}
 
-void Ship::draw(int8_t selected,uint8_t offset)
+void Ship::draw(int8_t selected,int8_t offset)
 {
 	for(uint8_t i=0; i<roomNum; ++i)
 	{
@@ -110,4 +110,4 @@ void Ship::draw(int8_t selected,uint8_t offset)
 			ab->drawRect(offset+shape.x+2,shape.y+2,shape.width-4,shape.height-4,1);
 		}
 	}
-};
+}
