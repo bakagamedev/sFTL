@@ -49,7 +49,6 @@ public:
 	uint8_t roomIDFromPoint(Point pos);
 	ShipRoom roomFromID(uint8_t id);
 };
-
 Ship::Ship()
 {
 
@@ -65,7 +64,7 @@ void Ship::step()
 	{
 		shield += rooms[2].functional;
 	}
-}
+};
 
 void Ship::setType(ShipType type)
 {
@@ -90,14 +89,14 @@ uint8_t Ship::roomIDFromPoint(Point pos)
 			return i;
 	}
 	return 255;
-}
+};
 
 ShipRoom Ship::roomFromID(uint8_t id)
 {
 	if(id<roomNum)
 		return rooms[id];
 	return rooms[0];
-}
+};
 
 void Ship::draw(int8_t selected,uint8_t offset)
 {

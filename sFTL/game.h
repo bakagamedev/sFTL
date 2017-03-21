@@ -13,7 +13,7 @@ private:
 	Point stars[15];
 
 	Ship playerShip;
-	Peep guy1 = Peep(playerShip);
+	PeepControl peeps;
 
 	void initStars();
 	void drawStars();
@@ -33,6 +33,8 @@ Game::Game(System & ab)
 	playerShip.ab = &ab;
 	playerShip.setType(ShipType::kestrel);
 
+	peeps.setup(ab,playerShip);
+
 	initStars();
 };
 
@@ -41,7 +43,7 @@ void Game::step()
 	if(warp>0) 
 	{	
 		warp++;	
-		if(warp>90) warp = 0;
+		if(warp>128) warp = 0;
 	}
 
 	if(page==0)
@@ -66,7 +68,7 @@ void Game::step()
 	}
 
 	playerShip.step();
-	guy1.update();
+	peeps.step();
 };
 
 void Game::draw()
@@ -77,7 +79,7 @@ void Game::draw()
 	drawBar();
 
 	playerShip.draw(selected-1,warp);
-	guy1.draw(ab);
+	peeps.draw();
 };
 
 void Game::drawBar()

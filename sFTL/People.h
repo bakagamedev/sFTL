@@ -6,18 +6,18 @@
 class Peep
 {
 private:
-	Ship *ship;
-
 	Species species;
 	Point position;
 	uint8_t roomID = 0;
 	ShipRoom roomData;
 	bool moved = false;
-
 	//Stats!
 	uint8_t statFixing;
 	//Stats!
 public:
+	System *ab;
+	Ship *ship;
+
 	int8_t hp = 100;
 	bool alive = false;
 
@@ -29,13 +29,12 @@ public:
 	void reset();
 	void draw(System *ab);
 };
-
 Peep::Peep(Ship &ship)
 {
 	this->ship = &ship;
 	alive = true;
 	reset();
-}
+};
 
 void Peep::update()
 {
@@ -80,7 +79,12 @@ void Peep::draw(System *ab)
 
 class PeepControl
 {
+private:
 public:
+	Ship *ship;
+	System *ab;
+	PeepControl();
+
 	//uint8_t peepmax = 10;
 	uint8_t peepmax;
 	Peep peeps[10];
@@ -88,9 +92,26 @@ public:
 	uint8_t add();
 	void kill(uint8_t id);
 
-	void update();
+	void setup(System &ab,Ship &ship);
+	void step();
 	void draw();
 };
+PeepControl::PeepControl();
+
+void PeepControl::setup(System &ab,Ship &ship)
+{
+	/* 
+	FAQ excerpt;
+	Q) Shouldn't this be in a constructor?
+	A) Great question! Yes it should!
+	*/
+	this->ab = &ab;
+	this->ship = &ship;
+	for(uint8_t p=0; p<10; ++p)
+	{
+		peeps[p].ab = &ab;
+	}
+}
 
 uint8_t PeepControl::add()
 {
@@ -111,4 +132,16 @@ void PeepControl::kill(uint8_t id)
 {
 	if(id<peepmax)
 		peeps[id].alive = false;
+}
+
+void PeepControl::step()
+{
+	for(uint8_t i=0; i<peepmax; ++i)
+		peeps[i].update();
+}
+
+void PeepControl::draw()
+{
+	for(uint8_t i=0; i<peepmax; ++i)
+		peeps[i].draw(ab);
 }
