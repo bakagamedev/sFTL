@@ -31,16 +31,17 @@ public:
 class Ship
 {
 private:
+	System *ab;
+	
 	ShipType type;
 	ShipRoom rooms[10];
 
 	int16_t shieldMax = 100;
 	int16_t shield = 100;
 public:
-	System *ab;
 
 	uint8_t roomNum = 0;
-	Ship();
+	Ship(System &ab);
 	void setType(ShipType type);
 
 	void step();
@@ -49,9 +50,9 @@ public:
 	uint8_t roomIDFromPoint(Point pos);
 	ShipRoom roomFromID(uint8_t id);
 };
-Ship::Ship()
+Ship::Ship(System &ab)
 {
-
+	this->ab = &ab;
 };
 
 void Ship::step()

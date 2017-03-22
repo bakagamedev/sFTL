@@ -7,18 +7,20 @@
 class Peep
 {
 private:
+	System *ab;
+	Ship *ship;
+
 	Species species;
 	Point position;
+
 	uint8_t roomID = 0;
 	ShipRoom roomData;
+
 	bool moved = false;
 	//Stats!
 	uint8_t statFixing;
 	//Stats!
 public:
-	System *ab;
-	Ship *ship;
-
 	int8_t hp = 100;
 	bool alive = false;
 
@@ -123,6 +125,9 @@ void PeepControl::step()
 	for(uint8_t i=0; i<peeps.getCount(); ++i)
 	{
 		peeps[i].update();
+
+		if(peeps[i].alive == false)
+			kill(i);
 	}
 }
 
