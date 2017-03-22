@@ -30,7 +30,7 @@ public:
 	Point getPos();
 	void update();
 	void reset();
-	void draw(System *ab);
+	void draw();
 };
 using PeepList = List<Peep, 10>;	
 
@@ -77,7 +77,7 @@ Species Peep::getSpecies()
 	return species;
 }
 
-void Peep::draw(System *ab)
+void Peep::draw()
 {
 	if(alive)
 		ab->drawCircle(position.x,position.y,4);
@@ -115,15 +115,21 @@ void PeepControl::add()
 
 void PeepControl::kill(uint8_t id)
 {
-	//
+	peeps.removeAt(id);
 }
 
 void PeepControl::step()
 {
-	//
+	for(uint8_t i=0; i<peeps.getCount(); ++i)
+	{
+		peeps[i].update();
+	}
 }
 
 void PeepControl::draw()
 {
-	//
+	for(uint8_t i=0; i<peeps.getCount(); ++i)
+	{
+		peeps[i].draw();
+	}
 }
