@@ -22,9 +22,10 @@ enum class ShipType : uint8_t
 
 enum class RoomType : uint8_t
 {
+	empty,
 	bridge,
 	sickbay,
 	weapons,
-	shields,
+	shield,
 	engine,
 };

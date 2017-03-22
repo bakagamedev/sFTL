@@ -12,12 +12,18 @@ public:
 		this->y = y;
 		this->width = width;
 		this->height = height;
-	}
+	};
+	Rectangle(void) = default;
+	Rectangle(const uint8_t x,const uint8_t y,const uint8_t width,const uint8_t height)
+	{
+		set(x,y,width,height);
+	};
 };
 
 class ShipRoom
 {
 public:
+	RoomType type = RoomType::empty;
 	int8_t hp = 100;
 	uint8_t functional = 1;
 	Rectangle shape;
@@ -27,6 +33,12 @@ public:
 	{
 		functional = (hp>=20);
 	}
+	ShipRoom(void) = default;
+	ShipRoom(RoomType type,Rectangle rect)
+	{
+		this->type = type;
+		this->shape.set(rect.x,rect.y,rect.width,rect.height);
+	};
 };
 using RoomList = List<ShipRoom, 10>;
 
@@ -73,19 +85,15 @@ void Ship::setType(ShipType type)
 {
 	this->type = type;
 
-	for(uint8_t i=0; i<7; ++i)	//Make 7 rooms
-	{
-		rooms.add(ShipRoom());
-	}
+	rooms.add(ShipRoom(RoomType::bridge,Rectangle(80,16,16,24)));	//Bridge
+	rooms.add(ShipRoom(RoomType::sickbay,Rectangle(64,16,16,24)));	//Medbay
+	rooms.add(ShipRoom(RoomType::shield,Rectangle(32,16,32,12)));	//Shield
+	rooms.add(ShipRoom(RoomType::weapons,Rectangle(32,28,32,12)));	//Weapons
+	rooms.add(ShipRoom(RoomType::engine,Rectangle(16,16,16,24)));	//Engine
+	rooms.add(ShipRoom(RoomType::empty,Rectangle(0,40,48,16)));		//Right Strut
+	rooms.add(ShipRoom(RoomType::empty,Rectangle(0,0,48,16)));		//Left Strut
+
 	roomNum = rooms.getCount();
-	
-	rooms[0].shape.set(80,16,16,24);	//Bridge
-	rooms[1].shape.set(64,16,16,24);	//Medbay
-	rooms[2].shape.set(32,16,32,12);	//Shield
-	rooms[3].shape.set(32,28,32,12);	//Weapons
-	rooms[4].shape.set(16,16,16,24);	//Engine
-	rooms[5].shape.set(0,40,48,16);		//Right Strut
-	rooms[6].shape.set(0,0,48,16);		//Left Strut
 };
 
 uint8_t Ship::roomIDFromPoint(Point pos)
