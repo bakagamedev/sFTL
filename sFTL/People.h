@@ -1,4 +1,5 @@
 #pragma once
+#include "strings.h"
 #include "types.h"
 #include "list.h"
 #include "system.h"
@@ -18,9 +19,12 @@ private:
 
 	bool moved = false;
 	//Stats!
-	uint8_t statFixing;
+	//Stat statFixing = Stat(1,0,5);
+	//Stat statPilot = Stat(1,0,5);
 	//Stats!
 public:
+	char name[8];
+
 	int8_t hp = 100;
 	bool alive = false;
 
@@ -32,7 +36,7 @@ public:
 	Point getPos();
 	void update();
 	void reset();
-	void draw();
+	void draw(bool selected);
 };
 using PeepList = List<Peep, 10>;	
 
@@ -56,10 +60,12 @@ void Peep::update()
 
 void Peep::reset()
 {
-	roomID = 1;	//medbay
+	roomID = random(0,6);	//ship->roomIDFromType(RoomType::bridge);	//Spawn on the bridge
 	roomData = ship->roomFromID(roomID);
 	position.x = roomData.shape.x + (roomData.shape.width / 2);
 	position.y = roomData.shape.y + (roomData.shape.height / 2);
+
+	strcpy_P(name, (char*)pgm_read_word(&(nameCrew[random(5)])));
 }
 
 void Peep::setPos(uint8_t x,uint8_t y)
@@ -79,10 +85,14 @@ Species Peep::getSpecies()
 	return species;
 }
 
-void Peep::draw()
+void Peep::draw(bool selected)
 {
 	if(alive)
-		ab->drawCircle(position.x,position.y,4);
+	{
+		ab->drawCircle(position.x,position.y,3);
+		if(selected)
+			ab->drawCircle(position.x,position.y,5);
+	}
 }
 
 class PeepControl
@@ -93,14 +103,17 @@ private:
 	PeepList peeps;
 
 public:
+	int8_t peepNum = 0;
 	PeepControl(System &ab,Ship &ship);
+
+	char* getName(uint8_t id);
 
 	void add();
 	void kill(uint8_t id);
 
 	void setup(System &ab,Ship &ship);
 	void step();
-	void draw();
+	void draw(int8_t selected);
 };
 PeepControl::PeepControl(System &ab,Ship &ship)
 {
@@ -108,14 +121,24 @@ PeepControl::PeepControl(System &ab,Ship &ship)
 	this->ship = &ship;	
 };
 
+char* PeepControl::getName(uint8_t id)
+{
+	if(id<peepNum)
+	{
+		return peeps[id].name;
+	}
+};
+
 void PeepControl::add()
 {
 	peeps.add(Peep(*ab,*ship));
+	peepNum = peeps.getCount();
 };
 
 void PeepControl::kill(uint8_t id)
 {
 	peeps.removeAt(id);
+	peepNum = peeps.getCount();
 }
 
 void PeepControl::step()
@@ -129,10 +152,10 @@ void PeepControl::step()
 	}
 }
 
-void PeepControl::draw()
+void PeepControl::draw(int8_t selected)
 {
 	for(uint8_t i=0; i<peeps.getCount(); ++i)
 	{
-		peeps[i].draw();
+		peeps[i].draw(i==selected);
 	}
 }

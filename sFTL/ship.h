@@ -55,6 +55,8 @@ private:
 public:
 	uint8_t roomNum = 0;
 
+	char* getRoomName(uint8_t id);
+
 	Ship(System &ab);
 	void setType(ShipType type);
 
@@ -62,12 +64,25 @@ public:
 	void draw(int8_t selected,int8_t offset);
 
 	uint8_t roomIDFromPoint(Point pos);
+	uint8_t roomIDFromType(RoomType type);
 	ShipRoom roomFromID(uint8_t id);
 };
 Ship::Ship(System &ab)
 {
 	this->ab = &ab;
 };
+
+char* Ship::getRoomName(uint8_t id)
+{
+	if(id<rooms.getCount())
+	{
+		uint8_t type = (uint8_t)(rooms[id].type);
+		char name[8];
+		strcpy_P(name, (char*)pgm_read_word(&(nameShipParts[type])));
+		return name;
+	}
+};
+
 
 void Ship::step()
 {
@@ -102,6 +117,16 @@ uint8_t Ship::roomIDFromPoint(Point pos)
 	{
 		Rectangle shape = rooms[i].shape;
 		if(ab->collide(pos,shape))
+			return i;
+	}
+	return 255;
+}
+
+uint8_t Ship::roomIDFromType(RoomType type)
+{
+	for(uint8_t i=0; i<rooms.getCount(); ++i)
+	{
+		if(rooms[i].type == type)
 			return i;
 	}
 	return 255;

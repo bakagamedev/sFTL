@@ -7,6 +7,14 @@ enum class State : uint8_t
 	pause,
 };
 
+enum class Page : uint8_t
+{
+	ship,
+	peeps,
+	target,
+	travel,
+};
+
 enum class Species : uint8_t
 {
 	human,
@@ -22,10 +30,11 @@ enum class ShipType : uint8_t
 
 enum class RoomType : uint8_t
 {
-	empty,
-	bridge,
-	sickbay,
-	weapons,
-	shield,
-	engine,
+	empty = 0,
+	bridge = 1,
+	sickbay = 2, 
+	weapons = 3,
+	shield = 4,
+	engine = 5,
 };
+
