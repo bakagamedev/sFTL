@@ -30,7 +30,7 @@ public:
 Game::Game(System & ab)
 {
 	this->ab = &ab;
-	
+
 	playerShip.setType(ShipType::kestrel);
 
 	initStars();
@@ -41,8 +41,8 @@ void Game::step()
 	if(warp!=0)
 	{	
 		warp++;
-		if(warp==127)
-			initStars();
+		if(warp==127)	//rejig star positions when ship is  offscreen
+			initStars();	
 	}
 
 	if(page==0)
@@ -73,7 +73,7 @@ void Game::step()
 void Game::draw()
 {
 	ab->clear();
-	//drawStars();
+	drawStars();
 
 	drawBar();
 

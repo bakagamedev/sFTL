@@ -1,4 +1,5 @@
 #pragma once
+#include "list.h"
 #include "types.h"
 #include "system.h"
 
@@ -27,20 +28,21 @@ public:
 		functional = (hp>=20);
 	}
 };
+using RoomList = List<ShipRoom, 10>;
 
 class Ship
 {
 private:
 	System *ab;
-	
+
 	ShipType type;
-	ShipRoom rooms[10];
+	RoomList rooms;
 
 	int16_t shieldMax = 100;
 	int16_t shield = 100;
 public:
-
 	uint8_t roomNum = 0;
+
 	Ship(System &ab);
 	void setType(ShipType type);
 
@@ -57,7 +59,7 @@ Ship::Ship(System &ab)
 
 void Ship::step()
 {
-	for(uint8_t r=0; r<roomNum; ++r)
+	for(uint8_t r=0; r<rooms.getCount(); ++r)
 	{
 		rooms[r].update();
 	}
@@ -70,8 +72,13 @@ void Ship::step()
 void Ship::setType(ShipType type)
 {
 	this->type = type;
-	roomNum = 7;
 
+	for(uint8_t i=0; i<7; ++i)	//Make 7 rooms
+	{
+		rooms.add(ShipRoom());
+	}
+	roomNum = rooms.getCount();
+	
 	rooms[0].shape.set(80,16,16,24);	//Bridge
 	rooms[1].shape.set(64,16,16,24);	//Medbay
 	rooms[2].shape.set(32,16,32,12);	//Shield
@@ -83,7 +90,7 @@ void Ship::setType(ShipType type)
 
 uint8_t Ship::roomIDFromPoint(Point pos)
 {
-	for(uint8_t i=0; i<roomNum; ++i)
+	for(uint8_t i=0; i<rooms.getCount(); ++i)
 	{
 		Rectangle shape = rooms[i].shape;
 		if(ab->collide(pos,shape))
@@ -94,16 +101,17 @@ uint8_t Ship::roomIDFromPoint(Point pos)
 
 ShipRoom Ship::roomFromID(uint8_t id)
 {
-	if(id<roomNum)
+	if(id<rooms.getCount())
 		return rooms[id];
 	return rooms[0];
 }
 
 void Ship::draw(int8_t selected,int8_t offset)
 {
-	for(uint8_t i=0; i<roomNum; ++i)
+	for(uint8_t i=0; i<rooms.getCount(); ++i)
 	{
 		Rectangle shape = rooms[i].shape;
+		ab->fillRect(offset+shape.x,shape.y,shape.width,shape.height,0);
 		ab->drawRect(offset+shape.x,shape.y,shape.width,shape.height,1);
 
 		if(selected==i)
