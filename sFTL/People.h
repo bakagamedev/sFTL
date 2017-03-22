@@ -23,6 +23,7 @@ public:
 	bool alive = false;
 
 	Peep(System &ab,Ship &ship);
+
 	Species getSpecies();
 	void setPos(uint8_t x,uint8_t y);
 	Point getPos();
@@ -89,54 +90,37 @@ private:
 	PeepList peeps;
 
 public:
-	PeepControl();
+	PeepControl(System &ab,Ship &ship);
 
-	uint8_t add();
+	void add();
 	void kill(uint8_t id);
 
 	void setup(System &ab,Ship &ship);
 	void step();
 	void draw();
 };
-PeepControl::PeepControl()	{};
-
-void PeepControl::setup(System &ab,Ship &ship)
+PeepControl::PeepControl(System &ab,Ship &ship)
 {
-	/* 
-	FAQ excerpt;
-	Q) Shouldn't this be in a constructor?
-	A) Great question! Yes it should!
-	*/
-	peepmax = 10;
 	this->ab = &ab;
-	this->ship = &ship;
-	for(uint8_t p=0; p<10; ++p)
-	{
-		peeps[p].ab = &ab;
-		peeps[p].ship = &ship;
-	}
-}
+	this->ship = &ship;	
+};
 
-uint8_t PeepControl::add()
+void PeepControl::add()
 {
-	peeps.add(Peep(ab,ship));
-	return 255;
+	peeps.add(Peep(*ab,*ship));
 };
 
 void PeepControl::kill(uint8_t id)
 {
-	if(id<peepmax)
-		peeps[id].alive = false;
+	//
 }
 
 void PeepControl::step()
 {
-	for(uint8_t i=0; i<peepmax; ++i)
-		peeps[i].update();
+	//
 }
 
 void PeepControl::draw()
 {
-	for(uint8_t i=0; i<peepmax; ++i)
-		peeps[i].draw(ab);
+	//
 }

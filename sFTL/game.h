@@ -13,7 +13,7 @@ private:
 	Point stars[15];
 
 	Ship playerShip;
-	PeepControl peeps;
+	PeepControl peeps = PeepControl(*ab,playerShip);
 
 	void initStars();
 	void drawStars();
@@ -32,8 +32,6 @@ Game::Game(System & ab)
 	this->ab = &ab;
 	playerShip.ab = &ab;
 	playerShip.setType(ShipType::kestrel);
-
-	peeps.setup(ab,playerShip);
 
 	initStars();
 };
