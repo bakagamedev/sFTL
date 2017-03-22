@@ -22,6 +22,7 @@ public:
 	int8_t hp = 100;
 	bool alive = false;
 
+	Peep(void) = default;
 	Peep(System &ab,Ship &ship);
 
 	Species getSpecies();
@@ -103,6 +104,8 @@ PeepControl::PeepControl(System &ab,Ship &ship)
 {
 	this->ab = &ab;
 	this->ship = &ship;	
+
+	add();
 };
 
 void PeepControl::add()

@@ -6,7 +6,7 @@ class List
 {
 public:
 	//static_assert(Capacity > 0, "Attempt to instantiate List with Capacity less than 1");
-	List();
+	List() {};
 private:
 	TItem items[Capacity];
 	int8_t next;
