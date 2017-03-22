@@ -58,8 +58,8 @@ void Peep::reset()
 {
 	roomID = 1;	//medbay
 	roomData = ship->roomFromID(roomID);
-	position.x = roomData.shape.x;
-	position.y = roomData.shape.y;
+	position.x = roomData.shape.x + (roomData.shape.width / 2);
+	position.y = roomData.shape.y + (roomData.shape.height / 2);
 }
 
 void Peep::setPos(uint8_t x,uint8_t y)
@@ -106,8 +106,6 @@ PeepControl::PeepControl(System &ab,Ship &ship)
 {
 	this->ab = &ab;
 	this->ship = &ship;	
-
-	add();
 };
 
 void PeepControl::add()

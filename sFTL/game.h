@@ -33,6 +33,8 @@ Game::Game(System & ab)
 
 	playerShip.setType(ShipType::kestrel);
 
+	peeps.add();
+
 	initStars();
 };
 
@@ -78,7 +80,9 @@ void Game::draw()
 	drawBar();
 
 	playerShip.draw(selected-1,warp);
-	peeps.draw();
+
+	if(warp == 0)
+		peeps.draw();
 };
 
 void Game::drawBar()
