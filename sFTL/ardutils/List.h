@@ -76,6 +76,7 @@ bool Ardutils::List<TItem, Capacity>::Add(const TItem & item) // O(1)
 
 	this->items[this->next] = item;
 	++this->next;
+	return true;
 }
 
 template <typename TItem, int8_t Capacity>

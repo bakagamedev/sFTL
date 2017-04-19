@@ -55,7 +55,7 @@ TValue Ardutils::Range<TValue>::GetMax(void) const
 }
 
 template<typename TValue>
-void Ardutils::Range<TValue>::SetMin(const TValue & min) const
+void Ardutils::Range<TValue>::SetMin(const TValue & min)
 {
 	DEBUG_ASSERT(min < this->max);
 
@@ -64,7 +64,7 @@ void Ardutils::Range<TValue>::SetMin(const TValue & min) const
 }
 
 template<typename TValue>
-void Ardutils::Range<TValue>::SetMax(const TValue & max) const
+void Ardutils::Range<TValue>::SetMax(const TValue & max)
 {
 	DEBUG_ASSERT(max > this->min);
 

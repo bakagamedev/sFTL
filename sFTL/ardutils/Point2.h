@@ -41,12 +41,6 @@ namespace Ardutils
 
 	template< typename TValue >
 	Point2<TValue> operator -(Point2<TValue> left, const Vector2<TValue> & right);
-
-	template< typename TValue >
-	Point2<TValue> operator +(const Vector2<TValue> &  left, Point2<TValue> right);
-
-	template< typename TValue >
-	Point2<TValue> operator -(const Vector2<TValue> &  left, Point2<TValue> right);
 }
 
 
@@ -93,13 +87,13 @@ namespace Ardutils
 	template< typename TValue >
 	bool operator ==(const Point2<TValue> & left, const Point2<TValue> & right)
 	{
-		return(left.X == right.X) && (left.Y == right.Y);
+		return (left.X == right.X) && (left.Y == right.Y);
 	}
 
 	template< typename TValue >
 	bool operator !=(const Point2<TValue> & left, const Point2<TValue> & right)
 	{
-		return(left.X != right.X) || (left.Y != right.Y);
+		return (left.X != right.X) || (left.Y != right.Y);
 	}
 
 	template< typename TValue >
@@ -112,17 +106,5 @@ namespace Ardutils
 	Point2<TValue> operator -(Point2<TValue> left, const Vector2<TValue> & right)
 	{
 		return left -= right;
-	}
-
-	template< typename TValue >
-	Point2<TValue> operator +(const Vector2<TValue> & left, Point2<TValue> & right)
-	{
-		return right += left;
-	}
-
-	template< typename TValue >
-	Point2<TValue> operator -(const Vector2<TValue> & left, Point2<TValue> & right)
-	{
-		return right -= left;
 	}
 }
