@@ -1,7 +1,7 @@
 #pragma once
 #include "strings.h"
 #include "types.h"
-#include "list.h"
+#include "ardutils/list.h"
 #include "system.h"
 #include "ship.h"
 
@@ -38,7 +38,7 @@ public:
 	void reset();
 	void draw(bool selected);
 };
-using PeepList = List<Peep, 10>;	
+using PeepList = Ardutils::List<Peep, 10>;	
 
 Peep::Peep(System &ab,Ship &ship)
 {
@@ -131,19 +131,19 @@ char* PeepControl::getName(uint8_t id)
 
 void PeepControl::add()
 {
-	peeps.add(Peep(*ab,*ship));
-	peepNum = peeps.getCount();
+	peeps.Add(Peep(*ab,*ship));
+	peepNum = peeps.GetCount();
 };
 
 void PeepControl::kill(uint8_t id)
 {
-	peeps.removeAt(id);
-	peepNum = peeps.getCount();
+	peeps.RemoveAt(id);
+	peepNum = peeps.GetCount();
 }
 
 void PeepControl::step()
 {
-	for(uint8_t i=0; i<peeps.getCount(); ++i)
+	for(uint8_t i=0; i<peeps.GetCount(); ++i)
 	{
 		peeps[i].update();
 
@@ -154,7 +154,7 @@ void PeepControl::step()
 
 void PeepControl::draw(int8_t selected)
 {
-	for(uint8_t i=0; i<peeps.getCount(); ++i)
+	for(uint8_t i=0; i<peeps.GetCount(); ++i)
 	{
 		peeps[i].draw(i==selected);
 	}
