@@ -28,7 +28,8 @@ const PROGMEM char name2[] = "Geoff";
 const PROGMEM char name3[] = "Noah";
 const PROGMEM char name4[] = "Butts";
 const PROGMEM char name5[] = "Fred";
+const PROGMEM char name6[] = "Gary";
 
 const char* const nameCrew[] PROGMEM = {
-	name1,name2,name3,name4,name5
+	name1,name2,name3,name4,name5,name6
 };
