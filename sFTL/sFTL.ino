@@ -21,9 +21,7 @@ void loop()
 	game.step();
 	game.draw();
 
-	ab.setCursor(0,0);
-	//ab.print(game.warp);
+	ab.screenSend();
 
-  	//Serial.write(ab.getBuffer(), 128 * 64 / 8);
 	ab.display();
 }
