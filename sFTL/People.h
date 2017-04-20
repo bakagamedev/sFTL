@@ -5,6 +5,10 @@
 #include "system.h"
 #include "ship.h"
 
+//bodge zone
+Point Convert(BytePoint other) { Point point; point.x = other.X; point.y=other.Y; return point; }
+//bodge zone
+
 class Peep
 {
 private:
