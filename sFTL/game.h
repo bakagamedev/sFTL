@@ -58,12 +58,12 @@ void Game::step()
 
 	if(selected==0)
 	{
-		if(ab->justPressed(LEFT_BUTTON)){	page--;	if(page==255) page = 4;	}
-		if(ab->justPressed(RIGHT_BUTTON)){	page++;	if(page>4)	page = 0;}
+		if(ab->justPressed(LEFT_BUTTON)){	page--;	selected = 0; if(page==255) page = 4;	}
+		if(ab->justPressed(RIGHT_BUTTON)){	page++;	selected = 0; if(page>4)	page = 0;}
 	}	
 
-	if(ab->justPressed(UP_BUTTON))	{	selected++;	}
-	if(ab->justPressed(DOWN_BUTTON)){	selected--;	}
+	if(ab->justPressed(UP_BUTTON))	{	if(page<2) selected++;	}
+	if(ab->justPressed(DOWN_BUTTON)){	if(page<2) selected--;	}
 
 
 	if(page==0)
