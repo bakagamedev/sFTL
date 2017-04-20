@@ -94,14 +94,14 @@ Ardutils::StaticClampedValue<TValue, Min, Max> & Ardutils::StaticClampedValue<TV
 }
 
 template<typename TValue, TValue Min, TValue Max>
-Ardutils::ClampedValue<TValue> & Ardutils::StaticClampedValue<TValue, Min, Max>::operator ++(void)
+Ardutils::StaticClampedValue<TValue> & Ardutils::StaticClampedValue<TValue, Min, Max>::operator ++(void)
 {
 	this->value = Min<TValue, Max>(this->value + 1);
 	return *this;
 }
 
 template<typename TValue, TValue Min, TValue Max>
-Ardutils::ClampedValue<TValue> & Ardutils::StaticClampedValue<TValue, Min, Max>::operator --(void)
+Ardutils::StaticClampedValue<TValue> & Ardutils::StaticClampedValue<TValue, Min, Max>::operator --(void)
 {
 	this->value = Max<TValue, Min>(this->value - 1);
 	return *this;
