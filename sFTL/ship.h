@@ -1,17 +1,18 @@
 #pragma once
-#include "ardutils/list.h"
+#include "ardutils/List.h"
 #include "types.h"
 #include "system.h"
 
-struct Rectangle : public Rect
+
+struct Rectangle : public ByteRectangle
 {
 public:
 	set(const uint8_t x,const uint8_t y,const uint8_t width,const uint8_t height)
 	{
-		this->x = x;
-		this->y = y;
-		this->width = width;
-		this->height = height;
+		this->X = x;
+		this->Y = y;
+		this->Width = width;
+		this->Height = height;
 	};
 	Rectangle(void) = default;
 	Rectangle(const uint8_t x,const uint8_t y,const uint8_t width,const uint8_t height)
@@ -40,7 +41,7 @@ public:
 	ShipRoom(RoomType type,Rectangle rect)
 	{
 		this->type = type;
-		this->shape.set(rect.x,rect.y,rect.width,rect.height);
+		this->shape.set(rect.X,rect.Y,rect.Width,rect.Height);
 	};
 };
 using RoomList = Ardutils::List<ShipRoom, 10>;
@@ -66,7 +67,7 @@ public:
 	void step();
 	void draw(int8_t selected,int8_t offset);
 
-	uint8_t roomIDFromPoint(Point pos);
+	uint8_t roomIDFromPoint(BytePoint pos);
 	uint8_t roomIDFromType(RoomType type);
 	ShipRoom roomFromID(uint8_t id);
 };
@@ -114,13 +115,13 @@ void Ship::setType(ShipType type)
 	roomNum = rooms.GetCount();
 };
 
-uint8_t Ship::roomIDFromPoint(Point pos)
+uint8_t Ship::roomIDFromPoint(BytePoint pos)
 {
 	for(uint8_t i=0; i<rooms.GetCount(); ++i)
 	{
-		Rectangle shape = rooms[i].shape;
-		if(ab->collide(pos,shape))
+		if(rooms[i].shape.Contains(pos.X,pos.Y))
 			return i;
+		
 	}
 	return 255;
 }
@@ -147,12 +148,12 @@ void Ship::draw(int8_t selected,int8_t offset)
 	for(uint8_t i=0; i<rooms.GetCount(); ++i)
 	{
 		Rectangle shape = rooms[i].shape;
-		ab->fillRect(offset+shape.x,shape.y,shape.width,shape.height,0);
-		ab->drawRect(offset+shape.x,shape.y,shape.width,shape.height,1);
+		ab->fillRect(offset+shape.X,shape.Y,shape.Width,shape.Height,0);
+		ab->drawRect(offset+shape.X,shape.Y,shape.Width,shape.Height,1);
 
 		if(selected==i)
 		{
-			ab->drawRect(offset+shape.x+2,shape.y+2,shape.width-4,shape.height-4,1);
+			ab->drawRect(offset+shape.X+2,shape.Y+2,shape.Width-4,shape.Height-4,1);
 		}
 	}
 }

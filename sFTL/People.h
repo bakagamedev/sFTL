@@ -1,7 +1,7 @@
 #pragma once
 #include "strings.h"
 #include "types.h"
-#include "ardutils/list.h"
+#include "ardutils/List.h"
 #include "system.h"
 #include "ship.h"
 
@@ -69,7 +69,7 @@ void Peep::update()
 		roomID = random(0,5);	//Pick random room
 		//roomID = ship->roomIDFromType(RoomType::bridge);	//Spawn on the bridge
 		roomData = ship->roomFromID(roomID);
-		setDestination(roomData.shape.x+8,roomData.shape.y+8);
+		setDestination(roomData.shape.X+8,roomData.shape.Y+8);
 		count = 120;
 	}
 	/* test code */
@@ -95,7 +95,7 @@ void Peep::update()
 
 	if(moved)
 	{
-		roomID = ship->roomIDFromPoint(Convert(position));
+		roomID = ship->roomIDFromPoint(position);
 		roomData = ship->roomFromID(roomID);
 		moved = false;
 	}
@@ -105,8 +105,8 @@ void Peep::reset()
 {
 	roomID = random(0,6);	//ship->roomIDFromType(RoomType::bridge);	//Spawn on the bridge
 	roomData = ship->roomFromID(roomID);
-	position.X = roomData.shape.x + (roomData.shape.width / 2);
-	position.Y = roomData.shape.y + (roomData.shape.height / 2);
+	position.X = roomData.shape.X + (roomData.shape.Width / 2);
+	position.Y = roomData.shape.Y + (roomData.shape.Height / 2);
 	setDestination(position.X,position.Y);
 
 	strcpy_P(name, (char*)pgm_read_word(&(nameCrew[random(5)])));
@@ -130,7 +130,7 @@ void Peep::setDestination(uint8_t x,uint8_t y)
 }
 void Peep::setDestination(ShipRoom room)
 {
-	this->destination = BytePoint(room.shape.x,room.shape.y);
+	this->destination = BytePoint(room.shape.X,room.shape.Y);
 }
 
 Species Peep::getSpecies()

@@ -19,7 +19,6 @@ namespace Ardutils
 		TPosition Y;
 		TSize Width;
 		TSize Height;
-
 	public:
 		Rectangle(void);
 
@@ -116,10 +115,10 @@ Ardutils::Point2<TPosition> Ardutils::Rectangle< TPosition, TSize >::GetLocation
 template< typename TPosition, typename TSize >
 bool Ardutils::Rectangle< TPosition, TSize >::IsEmpty(void) const
 {
-	return  (left->X == 0)
-		&& (left->Y == 0)
-		&& (left->Width == 0)
-		&& (left->Height == 0);
+	return  (this->X == 0)
+		&& (this->Y == 0)
+		&& (this->Width == 0)
+		&& (this->Height == 0);
 }
 
 template< typename TPosition, typename TSize >
