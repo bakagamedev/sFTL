@@ -119,7 +119,7 @@ uint8_t Ship::roomIDFromPoint(BytePoint pos)
 {
 	for(uint8_t i=0; i<rooms.GetCount(); ++i)
 	{
-		if(rooms[i].shape.Contains(pos.X,pos.Y))
+		if(rooms[i].shape.Contains(pos))
 			return i;
 		
 	}

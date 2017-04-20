@@ -19,6 +19,7 @@ namespace Ardutils
 		TPosition Y;
 		TSize Width;
 		TSize Height;
+
 	public:
 		Rectangle(void);
 
@@ -33,8 +34,8 @@ namespace Ardutils
 		Point2<TPosition> GetLocation(void) const;
 
 		bool IsEmpty(void) const;
-		TPosition GetArea(void) const;
-		TPosition GetPerimeter(void) const;
+		TSize GetArea(void) const;
+		TSize GetPerimeter(void) const;
 
 		void Offset(const Point2<TPosition> & point);
 		void Offset(const TPosition & x, const TPosition & y);
@@ -42,8 +43,12 @@ namespace Ardutils
 		void ScaleByUnit(const Vector2<TPosition> & vector);
 		void ScaleByUnit(const TPosition & x, const TPosition & y);
 
-		bool Contains(const Point2<TPosition> & point) const;
-		bool Contains(const TPosition & x, const TPosition & y) const;
+		template< typename TValue >
+		bool Contains(const Point2<TValue> & point) const;
+
+		template< typename TValue >
+		bool Contains(const TValue & x, const TValue & y) const;
+
 		bool Contains(const Rectangle<TPosition, TSize> & other) const;
 
 		bool Intersects(const Rectangle<TPosition, TSize> & point) const;
@@ -122,13 +127,13 @@ bool Ardutils::Rectangle< TPosition, TSize >::IsEmpty(void) const
 }
 
 template< typename TPosition, typename TSize >
-TPosition Ardutils::Rectangle< TPosition, TSize >::GetArea(void) const
+TSize Ardutils::Rectangle< TPosition, TSize >::GetArea(void) const
 {
 	return this->Width * this->Height;
 }
 
 template< typename TPosition, typename TSize >
-TPosition Ardutils::Rectangle< TPosition, TSize >::GetPerimeter(void) const
+TSize Ardutils::Rectangle< TPosition, TSize >::GetPerimeter(void) const
 {
 	return (this->Width + this->Height) * 2;
 }
@@ -166,14 +171,16 @@ void Ardutils::Rectangle< TPosition, TSize >::ScaleByUnit(const TPosition & x, c
 }
 
 template< typename TPosition, typename TSize >
-bool Ardutils::Rectangle< TPosition, TSize >::Contains(const Point2<TPosition> & point) const
+template< typename TValue >
+bool Ardutils::Rectangle< TPosition, TSize >::Contains(const Point2<TValue> & point) const
 {
 	return Ardutils::InRange(point.X, this->GetLeft(), this->GetRight())
 		&& Ardutils::InRange(point.Y, this->GetTop(), this->GetBottom());
 }
 
 template< typename TPosition, typename TSize >
-bool Ardutils::Rectangle< TPosition, TSize >::Contains(const TPosition & x, const TPosition & y) const
+template< typename TValue >
+bool Ardutils::Rectangle< TPosition, TSize >::Contains(const TValue & x, const TValue & y) const
 {
 	return Ardutils::InRange(x, this->GetLeft(), this->GetRight())
 		&& Ardutils::InRange(y, this->GetTop(), this->GetBottom());
