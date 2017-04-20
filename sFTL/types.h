@@ -1,4 +1,7 @@
 #pragma once
+#include "ardutils/Point2.h"
+
+using BytePoint = Ardutils::Point2<uint8_t>;
 
 enum class State : uint8_t
 {
