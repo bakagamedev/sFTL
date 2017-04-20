@@ -16,7 +16,10 @@ private:
 	Ship *ship;
 
 	Species species;
-	Point position;
+	BytePoint position;
+	BytePoint destination;
+
+	int8_t count = 10;
 
 	uint8_t roomID = 0;
 	ShipRoom roomData;
@@ -36,8 +39,13 @@ public:
 	Peep(System &ab,Ship &ship);
 
 	Species getSpecies();
+
 	void setPos(uint8_t x,uint8_t y);
-	Point getPos();
+	BytePoint getPos();
+
+	void setDestination(uint8_t x,uint8_t y);
+	void setDestination(ShipRoom room);
+
 	void update();
 	void reset();
 	void draw(bool selected);
@@ -54,9 +62,40 @@ Peep::Peep(System &ab,Ship &ship)
 
 void Peep::update()
 {
+	/* test code */
+	--count;
+	if((count < 0) && (destination == position))		//If standing still, walk to a random room
+	{
+		roomID = random(0,5);	//Pick random room
+		//roomID = ship->roomIDFromType(RoomType::bridge);	//Spawn on the bridge
+		roomData = ship->roomFromID(roomID);
+		setDestination(roomData.shape.x+8,roomData.shape.y+8);
+		count = 120;
+	}
+	/* test code */
+
+	//Manhattan distances, ho!
+	if(destination.Y != position.Y)	//Solve Y first, then X.
+	{
+		if(position.Y > destination.Y)	
+			position.Y--;
+		else
+			position.Y++;
+		moved = true;
+	}
+	else if(destination.X != position.X)
+	{
+		if(position.X > destination.X)	
+			position.X--;
+		else
+			position.X++;
+		moved = true;
+	}
+	//As long as ship designs stay rectangley, they shouldn't walk out of bounds
+
 	if(moved)
 	{
-		roomID = ship->roomIDFromPoint(position);
+		roomID = ship->roomIDFromPoint(Convert(position));
 		roomData = ship->roomFromID(roomID);
 		moved = false;
 	}
@@ -66,22 +105,32 @@ void Peep::reset()
 {
 	roomID = random(0,6);	//ship->roomIDFromType(RoomType::bridge);	//Spawn on the bridge
 	roomData = ship->roomFromID(roomID);
-	position.x = roomData.shape.x + (roomData.shape.width / 2);
-	position.y = roomData.shape.y + (roomData.shape.height / 2);
+	position.X = roomData.shape.x + (roomData.shape.width / 2);
+	position.Y = roomData.shape.y + (roomData.shape.height / 2);
+	setDestination(position.X,position.Y);
 
 	strcpy_P(name, (char*)pgm_read_word(&(nameCrew[random(5)])));
 }
 
 void Peep::setPos(uint8_t x,uint8_t y)
 {
-	this->position.x = x;
-	this->position.y = y;
+	this->position.X = x;
+	this->position.Y = y;
 	moved = true;
 }
 
-Point Peep::getPos()
+BytePoint Peep::getPos()
 {
 	return position;
+}
+
+void Peep::setDestination(uint8_t x,uint8_t y)
+{
+	this->destination = BytePoint(x,y);
+}
+void Peep::setDestination(ShipRoom room)
+{
+	this->destination = BytePoint(room.shape.x,room.shape.y);
 }
 
 Species Peep::getSpecies()
@@ -93,9 +142,9 @@ void Peep::draw(bool selected)
 {
 	if(alive)
 	{
-		ab->drawCircle(position.x,position.y,3);
+		ab->drawCircle(position.X,position.Y,3);
 		if(selected)
-			ab->drawCircle(position.x,position.y,5);
+			ab->drawCircle(position.X,position.Y,5);
 	}
 }
 

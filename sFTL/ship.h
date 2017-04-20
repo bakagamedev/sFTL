@@ -25,7 +25,10 @@ class ShipRoom
 public:
 	RoomType type = RoomType::empty;
 	int8_t hp = 100;
-	uint8_t functional = 1;
+
+	bool functional;
+	bool occupied = false;
+
 	Rectangle shape;
 	uint8_t crew;
 

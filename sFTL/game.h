@@ -44,11 +44,11 @@ Game::Game(System & ab)
 	peeps.add();
 	peeps.add();
 	peeps.add();
-
 };
 
 void Game::step()
 {
+
 	if(warp!=0)
 	{	
 		warp++;
@@ -85,6 +85,7 @@ void Game::step()
 
 	playerShip.step();
 	peeps.step();
+
 	stepInfo();
 };
 
