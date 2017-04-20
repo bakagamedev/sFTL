@@ -11,7 +11,7 @@ class Game
 private:
 	System *ab;
 	uint8_t page=0;
-	int8_t selected = 0;
+	uint8_t selected = 0;
 
 	char screentext1[8],screentext2[8],screentext3[8],screentext4[8];
 	bool drawText1=true,drawText2=false,drawText3=false;
@@ -58,16 +58,14 @@ void Game::step()
 
 	if(selected==0)
 	{
-		if(ab->justPressed(LEFT_BUTTON)){	page--;	}
-		if(ab->justPressed(RIGHT_BUTTON)){	page++;	}
-	}
-	if(page<0)	page = 0;
-	if(page>3)	page = 3;
+		if(ab->justPressed(LEFT_BUTTON)){	page--;	if(page==255) page = 4;	}
+		if(ab->justPressed(RIGHT_BUTTON)){	page++;	if(page>4)	page = 0;}
+	}	
 
 	if(ab->justPressed(UP_BUTTON))	{	selected++;	}
 	if(ab->justPressed(DOWN_BUTTON)){	selected--;	}
-	if(page<0)	page = 0;
-	if(page>3)	page = 3;
+
+
 	if(page==0)
 	{
 		if(selected>playerShip.roomNum) selected = playerShip.roomNum;
@@ -80,7 +78,7 @@ void Game::step()
 	if(selected<0) selected=0;	
 
 
-	if((ab->justPressed(A_BUTTON)) && (page == 3))
+	if((ab->justPressed(A_BUTTON)) && (page == 4))
 	{
 		warp = 1;
 	}
@@ -157,11 +155,11 @@ void Game::drawInfo()
 
 void Game::drawBar()
 {
-	const uint8_t startx = 40;
+	const uint8_t startx = 44;
 	const uint8_t starty = 56;
 
 	ab->fillRect(startx+(page*16),starty,16,8,1);
-	for(uint8_t i=0; i<4; ++i)
+	for(uint8_t i=0; i<5; ++i)
 	{
 		ab->drawRect(startx+(i*16),starty,16,8,page != i);
 	}

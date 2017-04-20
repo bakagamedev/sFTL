@@ -4,10 +4,11 @@
 const PROGMEM char pageShip[] = "Ship";
 const PROGMEM char pagePeeps[]= "Crew";
 const PROGMEM char pageTarget[]= "Target";
+const PROGMEM char pageDunno[]= "???";
 const PROGMEM char pageWarp[] = "Travel";
 
 const char* const pageNames[] PROGMEM = {
-	pageShip,pagePeeps,pageTarget,pageWarp
+	pageShip,pagePeeps,pageTarget,pageDunno,pageWarp
 };
 
 //Ship bits
