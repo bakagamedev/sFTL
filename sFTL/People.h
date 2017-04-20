@@ -19,6 +19,8 @@ private:
 	BytePoint position;
 	BytePoint destination;
 
+	int8_t count = 10;
+
 	uint8_t roomID = 0;
 	ShipRoom roomData;
 
@@ -37,8 +39,13 @@ public:
 	Peep(System &ab,Ship &ship);
 
 	Species getSpecies();
+
 	void setPos(uint8_t x,uint8_t y);
 	BytePoint getPos();
+
+	void setDestination(uint8_t x,uint8_t y);
+	void setDestination(ShipRoom room);
+
 	void update();
 	void reset();
 	void draw(bool selected);
@@ -55,8 +62,20 @@ Peep::Peep(System &ab,Ship &ship)
 
 void Peep::update()
 {
+	/* test code */
+	--count;
+	if((count < 0) && (destination == position))		//If standing still, walk to a random room
+	{
+		roomID = random(0,5);	//Pick random room
+		//roomID = ship->roomIDFromType(RoomType::bridge);	//Spawn on the bridge
+		roomData = ship->roomFromID(roomID);
+		setDestination(roomData.shape.x+8,roomData.shape.y+8);
+		count = 120;
+	}
+	/* test code */
+
 	//Manhattan distances, ho!
-	if(destination.Y != position.Y)
+	if(destination.Y != position.Y)	//Solve Y first, then X.
 	{
 		if(position.Y > destination.Y)	
 			position.Y--;
@@ -72,6 +91,7 @@ void Peep::update()
 			position.X++;
 		moved = true;
 	}
+	//As long as ship designs stay rectangley, they shouldn't walk out of bounds
 
 	if(moved)
 	{
@@ -87,6 +107,7 @@ void Peep::reset()
 	roomData = ship->roomFromID(roomID);
 	position.X = roomData.shape.x + (roomData.shape.width / 2);
 	position.Y = roomData.shape.y + (roomData.shape.height / 2);
+	setDestination(position.X,position.Y);
 
 	strcpy_P(name, (char*)pgm_read_word(&(nameCrew[random(5)])));
 }
@@ -101,6 +122,15 @@ void Peep::setPos(uint8_t x,uint8_t y)
 BytePoint Peep::getPos()
 {
 	return position;
+}
+
+void Peep::setDestination(uint8_t x,uint8_t y)
+{
+	this->destination = BytePoint(x,y);
+}
+void Peep::setDestination(ShipRoom room)
+{
+	this->destination = BytePoint(room.shape.x,room.shape.y);
 }
 
 Species Peep::getSpecies()
