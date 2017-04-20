@@ -8,13 +8,13 @@
 class Game
 {
 private:
-	bool butts = false;
 	System *ab;
 	uint8_t page=0;
 	int8_t selected = 0;
 	Point stars[15];
 
 	char screentext1[8],screentext2[8],screentext3[8],screentext4[8];
+	bool drawText1=true,drawText2=false,drawText3=false;
 
 	Ship playerShip = Ship(*ab);
 	PeepControl peeps = PeepControl(*ab,playerShip);
@@ -114,38 +114,52 @@ void Game::draw()
 
 void Game::stepInfo()
 {
-	if(selected==0)
-	{
-		strcpy_P(screentext1, (char*)pgm_read_word(&(pageNames[page]))); //I pretend to know how this works!
-		butts = true;
-	}
-	else if (selected>0)
+	drawText1 = true;
+	strcpy_P(screentext1, (char*)pgm_read_word(&(pageNames[page]))); //I pretend to know how this works!
+	drawText2 = false;
+	drawText3 = false;
+	if (selected>0)
 	{
 		switch(page)
 		{
 			case 0:
 			{
 				char* temp = playerShip.getRoomName(selected-1);
-				strcpy(screentext1,temp);
+				strcpy(screentext2,temp);
 			}; break;
 			case 1:
 			{
 				char* temp = peeps.getName(selected-1);
-				strcpy(screentext1,temp);
+				strcpy(screentext2,temp);
 			}; break;
 		}
+		drawText2 = true;		
 	}
 };
 
 void Game::drawInfo()
 {
-	ab->setCursor(80,0);
-	ab->print(screentext1);
+	//this can probably be minimised a bit
+	if(drawText1)
+	{
+		ab->setCursor(0,56);
+		ab->print(screentext1);
+	}
+	if(drawText2)
+	{
+		ab->setCursor(80,0);
+		ab->print(screentext2);
+	}
+	if(drawText3)
+	{
+		ab->setCursor(80,8);
+		ab->print(screentext3);
+	}
 };
 
 void Game::drawBar()
 {
-	const uint8_t startx = 32;
+	const uint8_t startx = 40;
 	const uint8_t starty = 56;
 
 	ab->fillRect(startx+(page*16),starty,16,8,1);
