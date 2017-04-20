@@ -67,6 +67,24 @@ namespace Ardutils
 	{
 		return (Value < 0) ? -1 : (Value > 0) ? 1 : 0;
 	}
+	
+	template< typename T >
+	constexpr bool InRange(const T & value, const T & min, const T & max) noexcept
+	{
+		return (value >= min) && (value <= max);
+	}
+
+	template< typename T, T Min, T Max >
+	constexpr bool InRange(const T & value) noexcept
+	{
+		return (value >= Min) && (value <= Max);
+	}
+
+	template< typename T, T Value, T Min, T Max >
+	constexpr bool InRange(void) noexcept
+	{
+		return (Value >= Min) && (Value <= Max);
+	}
 }
 
 

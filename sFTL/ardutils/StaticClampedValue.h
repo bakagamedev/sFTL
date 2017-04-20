@@ -31,9 +31,9 @@ namespace Ardutils
 
 		StaticClampedValue<TValue, Min, Max> & operator -=(const TValue & value);
 
-		ClampedValue<TValue> & operator ++(void);
+		StaticClampedValue<TValue, Min, Max> & operator ++(void);
 
-		ClampedValue<TValue> & operator --(void);
+		StaticClampedValue<TValue, Min, Max> & operator --(void);
 	};
 }
 
@@ -75,34 +75,34 @@ Ardutils::StaticClampedValue<TValue, Min, Max>::operator TValue(void) const
 template<typename TValue, TValue Min, TValue Max>
 Ardutils::StaticClampedValue<TValue, Min, Max> & Ardutils::StaticClampedValue<TValue, Min, Max>::operator =(const TValue & value)
 {
-	this->value = Clamp<TValue, Min, Max>(value);
+	this->value = Ardutils::Clamp<TValue, Min, Max>(value);
 	return *this;
 }
 
 template<typename TValue, TValue Min, TValue Max>
 Ardutils::StaticClampedValue<TValue, Min, Max> & Ardutils::StaticClampedValue<TValue, Min, Max>::operator +=(const TValue & value)
 {
-	this->value = Clamp<TValue, Min, Max>(this->value + value);
+	this->value = Ardutils::Clamp<TValue, Min, Max>(this->value + value);
 	return *this;
 }
 
 template<typename TValue, TValue Min, TValue Max>
 Ardutils::StaticClampedValue<TValue, Min, Max> & Ardutils::StaticClampedValue<TValue, Min, Max>::operator -=(const TValue & value)
 {
-	this->value = Clamp<TValue, Min, Max>(this->value - value);
+	this->value = Ardutils::Clamp<TValue, Min, Max>(this->value - value);
 	return *this;
 }
 
 template<typename TValue, TValue Min, TValue Max>
-Ardutils::StaticClampedValue<TValue> & Ardutils::StaticClampedValue<TValue, Min, Max>::operator ++(void)
+Ardutils::StaticClampedValue<TValue, Min, Max> & Ardutils::StaticClampedValue<TValue, Min, Max>::operator ++(void)
 {
-	this->value = Min<TValue, Max>(this->value + 1);
+	this->value = Ardutils::Min<TValue, Max>(this->value + 1);
 	return *this;
 }
 
 template<typename TValue, TValue Min, TValue Max>
-Ardutils::StaticClampedValue<TValue> & Ardutils::StaticClampedValue<TValue, Min, Max>::operator --(void)
+Ardutils::StaticClampedValue<TValue, Min, Max> & Ardutils::StaticClampedValue<TValue, Min, Max>::operator --(void)
 {
-	this->value = Max<TValue, Min>(this->value - 1);
+	this->value = Ardutils::Max<TValue, Min>(this->value - 1);
 	return *this;
 }
