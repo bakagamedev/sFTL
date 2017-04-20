@@ -17,6 +17,7 @@ private:
 
 	Species species;
 	Point position;
+	Point destination;
 
 	uint8_t roomID = 0;
 	ShipRoom roomData;
@@ -54,6 +55,25 @@ Peep::Peep(System &ab,Ship &ship)
 
 void Peep::update()
 {
+	/*
+	if(destination.y != position.y)
+	{
+		if(position.y > destination.y)	
+			position.y--;
+		else
+			position.y++;
+		moved = true;
+	}
+	else if(destination.x != position.x)
+	{
+		if(position.x > destination.x)	
+			position.x--;
+		else
+			position.x++;
+		moved = true;
+	}
+	*/
+
 	if(moved)
 	{
 		roomID = ship->roomIDFromPoint(position);
