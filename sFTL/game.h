@@ -3,6 +3,7 @@
 #include "system.h"
 #include "ship.h"
 #include "people.h"
+#include "background.h"
 #include "types.h"
 
 class Game
@@ -11,16 +12,14 @@ private:
 	System *ab;
 	uint8_t page=0;
 	int8_t selected = 0;
-	Point stars[15];
 
 	char screentext1[8],screentext2[8],screentext3[8],screentext4[8];
 	bool drawText1=true,drawText2=false,drawText3=false;
 
 	Ship playerShip = Ship(*ab);
 	PeepControl peeps = PeepControl(*ab,playerShip);
+	Background background = Background(*ab);
 
-	void initStars();
-	void drawStars();
 	void drawBar();
 	void input();
 
@@ -46,7 +45,6 @@ Game::Game(System & ab)
 	peeps.add();
 	peeps.add();
 
-	initStars();
 };
 
 void Game::step()
@@ -55,7 +53,7 @@ void Game::step()
 	{	
 		warp++;
 		if(warp==127)	//rejig star positions when ship is  offscreen
-			initStars();	
+			background.reset();
 	}
 
 	if(selected==0)
@@ -95,7 +93,7 @@ void Game::step()
 void Game::draw()
 {
 	ab->clear();
-	drawStars();
+	background.draw();
 
 	int8_t sel = selected-1;
 	if(page != 0 ) sel = -1;
@@ -169,16 +167,3 @@ void Game::drawBar()
 	}
 };
 
-void Game::initStars()
-{
-	for(uint8_t i=0; i<15; ++i)
-	{
-		stars[i].x = random(128);
-		stars[i].y = random(56);
-	}
-};
-void Game::drawStars()
-{
-	for(uint8_t i=0; i<15; ++i)
-		ab->drawPixel(stars[i].x,stars[i].y,1);
-};
