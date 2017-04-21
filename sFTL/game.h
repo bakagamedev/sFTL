@@ -1,4 +1,5 @@
 #pragma once	
+#include "Ardutils/StaticWrappedValue.h"
 #include "strings.h"
 #include "system.h"
 #include "ship.h"
@@ -10,7 +11,9 @@ class Game
 {
 private:
 	System *ab;
-	uint8_t page=0;
+
+	Ardutils::StaticWrappedValue<uint8_t,0,4> page;
+
 	uint8_t selected = 0;
 
 	char screentext1[8],screentext2[8],screentext3[8],screentext4[8];
@@ -58,8 +61,8 @@ void Game::step()
 
 	if(selected==0)
 	{
-		if(ab->justPressed(LEFT_BUTTON)){	page--;	selected = 0; if(page==255) page = 4;	}
-		if(ab->justPressed(RIGHT_BUTTON)){	page++;	selected = 0; if(page>4)	page = 0;}
+		if(ab->justPressed(LEFT_BUTTON)){	page--;	selected = 0; }
+		if(ab->justPressed(RIGHT_BUTTON)){	page++;	selected = 0; }
 	}	
 
 	if(ab->justPressed(UP_BUTTON))	{	if(page<2) selected++;	}
