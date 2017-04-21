@@ -13,17 +13,17 @@ namespace Ardutils
 	class Range
 	{
 	private:
-		TValue min;
-		TValue max;
+		TValue minValue;
+		TValue maxValue;
 
 	public:
-		Range(const TValue & min, const TValue & max);
+		Range(const TValue & minValue, const TValue & maxValue);
 
 		TValue GetMin(void) const;
 		TValue GetMax(void) const;
 
-		void SetMin(const TValue & min);
-		void SetMax(const TValue & max);
+		void SetMin(const TValue & minValue);
+		void SetMax(const TValue & maxValue);
 
 		TValue Clamp(const TValue & value) const;
 	};
@@ -35,43 +35,43 @@ namespace Ardutils
 //
 
 template<typename TValue>
-Ardutils::Range<TValue>::Range(const TValue & min, const TValue & max)
-	: min(min), max(max)
+Ardutils::Range<TValue>::Range(const TValue & minValue, const TValue & maxValue)
+	: minValue(minValue), maxValue(maxValue)
 {
 }
 
 template<typename TValue>
 TValue Ardutils::Range<TValue>::GetMin(void) const
 {
-	return this->min;
+	return this->minValue;
 }
 
 template<typename TValue>
 TValue Ardutils::Range<TValue>::GetMax(void) const
 {
-	return this->max;
+	return this->maxValue;
 }
 
 template<typename TValue>
-void Ardutils::Range<TValue>::SetMin(const TValue & min)
+void Ardutils::Range<TValue>::SetMin(const TValue & minValue)
 {
-	DEBUG_ASSERT(min < this->max);
+	DEBUG_ASSERT(minValue < this->maxValue);
 
-	if (min < this->max)
-		this->min = min;
+	if (minValue < this->maxValue)
+		this->minValue = minValue;
 }
 
 template<typename TValue>
-void Ardutils::Range<TValue>::SetMax(const TValue & max)
+void Ardutils::Range<TValue>::SetMax(const TValue & maxValue)
 {
-	DEBUG_ASSERT(max > this->min);
+	DEBUG_ASSERT(maxValue > this->minValue);
 
-	if (max > this->min)
-		this->max = max;
+	if (maxValue > this->minValue)
+		this->maxValue = maxValue;
 }
 
 template<typename TValue>
 TValue Ardutils::Range<TValue>::Clamp(const TValue & value) const
 {
-	return Clamp(value, this->min, this->max);
+	return Clamp(value, this->minValue, this->maxValue);
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "..\Utils.h"
+#include "..\Debug.h"
 
 //
 // Declaration

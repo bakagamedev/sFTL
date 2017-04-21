@@ -11,11 +11,11 @@ namespace Ardutils
 	{
 	private:
 		TValue value;
-		const TValue min;
-		const TValue max;
+		const TValue minValue;
+		const TValue maxValue;
 
 	public:
-		WrappedValue(const TValue & min, const TValue & max);
+		WrappedValue(const TValue & minValue, const TValue & maxValue);
 
 		TValue GetValue(void) const;
 		TValue GetMin(void) const;
@@ -34,8 +34,8 @@ namespace Ardutils
 //
 
 template< typename TValue >
-Ardutils::WrappedValue< TValue >::WrappedValue(const TValue & min, const TValue & max)
-	: value(min), min(min), max(max)
+Ardutils::WrappedValue< TValue >::WrappedValue(const TValue & minValue, const TValue & maxValue)
+	: value(minValue), minValue(minValue), maxValue(maxValue)
 {
 }
 
@@ -48,13 +48,13 @@ TValue Ardutils::WrappedValue< TValue >::GetValue(void) const
 template< typename TValue >
 TValue Ardutils::WrappedValue< TValue >::GetMin(void) const
 {
-	return this->min;
+	return this->minValue;
 }
 
 template< typename TValue >
 TValue Ardutils::WrappedValue< TValue >::GetMax(void) const
 {
-	return this->max;
+	return this->maxValue;
 }
 
 template< typename TValue >
@@ -66,8 +66,8 @@ Ardutils::WrappedValue< TValue >::operator TValue(void) const
 template< typename TValue >
 Ardutils::WrappedValue< TValue > & Ardutils::WrappedValue< TValue >::operator ++(void)
 {
-	if (this->value == this->max)
-		this->value = this->min;
+	if (this->value == this->maxValue)
+		this->value = this->minValue;
 	else
 		++this->value;
 	return *this;
@@ -76,8 +76,8 @@ Ardutils::WrappedValue< TValue > & Ardutils::WrappedValue< TValue >::operator ++
 template< typename TValue >
 Ardutils::WrappedValue< TValue >  & Ardutils::WrappedValue< TValue >::operator --(void)
 {
-	if (this->value == this->min)
-		this->value = this->max;
+	if (this->value == this->minValue)
+		this->value = this->maxValue;
 	else
 		--this->value;
 	return *this;

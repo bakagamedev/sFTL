@@ -14,10 +14,11 @@ private:
 	System *ab;
 
 	Ardutils::StaticWrappedValue<uint8_t,0,4> page;
+	Ardutils::ClampedValue<uint8_t> selected = Ardutils::ClampedValue<uint8_t>(0,0,1);
 
-	uint8_t selected = 0;
 
 	int16_t cameraX = 0;
+	int8_t warp=0;
 
 	char screentext1[8],screentext2[8],screentext3[8],screentext4[8];
 	bool drawText1=true,drawText2=false,drawText3=false;
@@ -34,7 +35,6 @@ private:
 	void stepInfo();
 	void drawInfo();
 public:
-	int8_t warp=0;
 
 	Game(System & ab);
 	void step();
@@ -63,25 +63,26 @@ void Game::step()
 		if(warp==127)	//rejig star positions when ship is  offscreen
 			background.reset();
 	}
-
-	if(selected==0)
+	else	//Allow inputs when not travelling
 	{
-		if(ab->justPressed(LEFT_BUTTON)){	page--;	selected = 0; }
-		if(ab->justPressed(RIGHT_BUTTON)){	page++;	selected = 0; }
-	}	
+		if(selected==0)
+		{
+			if(ab->justPressed(LEFT_BUTTON)){	page--;	selected = 0; }
+			if(ab->justPressed(RIGHT_BUTTON)){	page++;	selected = 0; }
 
-	if(ab->justPressed(UP_BUTTON))	{	if(page<2) selected++;	}
-	if(ab->justPressed(DOWN_BUTTON)){	if(page<2) selected--;	}
+			uint8_t valueMax = 0;
+			switch(page)
+			{
+				case 0:	{	valueMax = playerShip.roomNum;	}; break;
+				case 1:	{	valueMax = peeps.peepNum;	}; break;
+			}
+			selected.SetMax(valueMax);
+		}	
 
-
-	if(page==0)
-	{
-		if(selected>playerShip.roomNum) selected = playerShip.roomNum;
+		if(ab->justPressed(UP_BUTTON))	{	if(page<2) selected++;	}
+		if(ab->justPressed(DOWN_BUTTON)){	if((page<2)&&(selected>0)) selected--;	}
 	}
-	if(page==1)
-	{
-		if(selected>peeps.peepNum)	selected = peeps.peepNum;
-	}
+
 
 	if(page==3)	{	cameraX = min(cameraX+2,192);	}
 	else	{	cameraX = max(cameraX-2,0);	}

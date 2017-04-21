@@ -1,6 +1,7 @@
 #pragma once
 
 #include "..\Utils.h"
+#include "..\Debug.h"
 
 //
 // Declaration
@@ -39,5 +40,5 @@ TValue Ardutils::StaticRange<TValue, Min, Max>::GetMax(void) const
 template<typename TValue, TValue Min, TValue Max>
 TValue Ardutils::StaticRange<TValue, Min, Max>::Clamp(const TValue & value) const
 {
-	return Clamp<TValue, Min, Max>(value);
+	return Ardutils::Clamp<TValue, Min, Max>(value);
 }

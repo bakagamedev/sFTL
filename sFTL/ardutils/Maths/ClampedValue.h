@@ -1,6 +1,7 @@
 #pragma once
 
 #include "..\Utils.h"
+#include "..\Debug.h"
 
 //
 // Declaration
@@ -13,11 +14,11 @@ namespace Ardutils
 	{
 	private:
 		TValue value;
-		TValue min;
-		TValue max;
+		TValue minValue;
+		TValue maxValue;
 
 	public:
-		ClampedValue(const TValue & value, const TValue & min, const TValue & max);
+		ClampedValue(const TValue & value, const TValue & minValue, const TValue & maxValue);
 
 		TValue GetValue(void) const;
 		TValue GetMin(void) const;
@@ -45,10 +46,10 @@ namespace Ardutils
 //
 
 template<typename TValue>
-Ardutils::ClampedValue<TValue>::ClampedValue(const TValue & value, const TValue & min, const TValue & max)
-	: min(min), max(max)
+Ardutils::ClampedValue<TValue>::ClampedValue(const TValue & value, const TValue & minValue, const TValue & maxValue)
+	: minValue(minValue), maxValue(maxValue)
 {
-	this->value = Clamp(value, min, max);
+	this->value = Clamp(value, minValue, maxValue);
 }
 
 template<typename TValue>
@@ -60,37 +61,37 @@ TValue Ardutils::ClampedValue<TValue>::GetValue(void) const
 template<typename TValue>
 TValue Ardutils::ClampedValue<TValue>::GetMin(void) const
 {
-	return this->min;
+	return this->minValue;
 }
 
 template<typename TValue>
 TValue Ardutils::ClampedValue<TValue>::GetMax(void) const
 {
-	return this->max;
+	return this->maxValue;
 }
 
 template<typename TValue>
 void Ardutils::ClampedValue<TValue>::SetValue(const TValue & value)
 {
-	this->value = Clamp(this->value, this->min, this->max);
+	this->value = Clamp(this->value, this->minValue, this->maxValue);
 }
 
 template<typename TValue>
 void Ardutils::ClampedValue<TValue>::SetMin(const TValue & value)
 {
-	DEBUG_ASSERT(value <= this->max);
+	DEBUG_ASSERT(value <= this->maxValue);
 
-	this->min = value;
-	this->value = Max(this->value, this->min);
+	this->minValue = value;
+	this->value = Max(this->value, this->minValue);
 }
 
 template<typename TValue>
 void Ardutils::ClampedValue<TValue>::SetMax(const TValue & value)
 {
-	DEBUG_ASSERT(value >= this->min);
+	DEBUG_ASSERT(value >= this->minValue);
 
-	this->max = value;
-	this->value = Min(this->value, this->max);
+	this->maxValue = value;
+	this->value = Min(this->value, this->maxValue);
 }
 
 template<typename TValue>
@@ -102,7 +103,7 @@ Ardutils::ClampedValue<TValue>::operator TValue(void) const
 template<typename TValue>
 Ardutils::ClampedValue<TValue> & Ardutils::ClampedValue<TValue>::operator =(const TValue & value)
 {
-	this->value = Clamp(this->value, this->min, this->max);
+	this->value = Clamp(this->value, this->minValue, this->maxValue);
 	return *this;
 }
 
@@ -110,7 +111,7 @@ template<typename TValue>
 Ardutils::ClampedValue<TValue> & Ardutils::ClampedValue<TValue>::operator +=(const TValue & value)
 {
 	// Explicit type required on Clamp because of integer promotion rules
-	this->value = Clamp<TValue>(this->value + value, this->min, this->max);
+	this->value = Clamp<TValue>(this->value + value, this->minValue, this->maxValue);
 	return *this;
 }
 
@@ -118,7 +119,7 @@ template<typename TValue>
 Ardutils::ClampedValue<TValue> & Ardutils::ClampedValue<TValue>::operator -=(const TValue & value)
 {
 	// Explicit type required on Clamp because of integer promotion rules
-	this->value = Clamp<TValue>(this->value - value, this->min, this->max);
+	this->value = Clamp<TValue>(this->value - value, this->minValue, this->maxValue);
 	return *this;
 }
 
@@ -126,7 +127,7 @@ template<typename TValue>
 Ardutils::ClampedValue<TValue> & Ardutils::ClampedValue<TValue>::operator ++(void)
 {
 	// Explicit type required on Min because of integer promotion rules
-	this->value = Min<TValue>(this->value + 1, this->max);
+	this->value = Min<TValue>(this->value + 1, this->maxValue);
 	return *this;
 }
 
@@ -134,6 +135,6 @@ template<typename TValue>
 Ardutils::ClampedValue<TValue> & Ardutils::ClampedValue<TValue>::operator --(void)
 {
 	// Explicit type required on Max because of integer promotion rules
-	this->value = Max<TValue>(this->value - 1, this->min);
+	this->value = Max<TValue>(this->value - 1, this->minValue);
 	return *this;
 }
