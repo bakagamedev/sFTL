@@ -120,6 +120,7 @@ void Game::draw()
 			peeps.draw(sel,pos);
 		}
 
+		//if(enemyShip.hp > 0)
 		ab->drawBitmap(120+cameraX,0,uiEnemyShip,8,64);
 	}
 	else
@@ -169,12 +170,12 @@ void Game::drawInfo()
 	}
 	if(drawText2)
 	{
-		ab->setCursor(80,0);
+		ab->setCursor(70,0);
 		ab->print(screentext2);
 	}
 	if(drawText3)
 	{
-		ab->setCursor(80,8);
+		ab->setCursor(70,8);
 		ab->print(screentext3);
 	}
 };
