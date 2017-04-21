@@ -16,10 +16,14 @@ private:
 
 	uint8_t selected = 0;
 
+	int16_t cameraX = 0;
+
 	char screentext1[8],screentext2[8],screentext3[8],screentext4[8];
 	bool drawText1=true,drawText2=false,drawText3=false;
 
 	Ship playerShip = Ship(*ab);
+	Ship enemyShip = Ship(*ab);
+	
 	PeepControl peeps = PeepControl(*ab,playerShip);
 	Background background = Background(*ab);
 
@@ -51,7 +55,6 @@ Game::Game(System & ab)
 
 void Game::step()
 {
-
 	if(warp!=0)
 	{	
 		warp++;
@@ -78,6 +81,9 @@ void Game::step()
 		if(selected>peeps.peepNum)	selected = peeps.peepNum;
 	}
 
+	if(page==3)	{	cameraX = min(cameraX+2,192);	}
+	else	{	cameraX = max(cameraX-2,0);	}
+
 	if(selected<0) selected=0;	
 
 
@@ -99,13 +105,25 @@ void Game::draw()
 
 	int8_t sel = selected-1;
 	if(page != 0 ) sel = -1;
-	playerShip.draw(sel,warp);
 
-	if(warp == 0)
+	int8_t pos;
+	if(cameraX<128)
 	{
-		sel = selected-1;
-		if(page != 1) sel = -1;
-		peeps.draw(sel);
+		pos = -cameraX;
+		playerShip.draw(sel,pos+warp);
+
+		if(warp == 0)
+		{
+			sel = selected-1;
+			if(page != 1) sel = -1;
+			peeps.draw(sel,pos);
+		}
+	}
+	else
+	{
+		pos = (-cameraX)-256;
+		ab->fillRect(pos,16,64,32,0);
+		ab->drawRect(pos,16,64,32,1);
 	}
 
 	drawBar();

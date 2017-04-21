@@ -48,7 +48,7 @@ public:
 
 	void update();
 	void reset();
-	void draw(bool selected);
+	void draw(bool selected,int8_t offset);
 };
 using PeepList = Ardutils::List<Peep, 10>;	
 
@@ -138,13 +138,13 @@ Species Peep::getSpecies()
 	return species;
 }
 
-void Peep::draw(bool selected)
+void Peep::draw(bool selected,int8_t offset)
 {
 	if(alive)
 	{
-		ab->drawCircle(position.X,position.Y,3);
+		ab->drawCircle(position.X + offset,position.Y,3);
 		if(selected)
-			ab->drawCircle(position.X,position.Y,5);
+			ab->drawCircle(position.X + offset,position.Y,5);
 	}
 }
 
@@ -166,7 +166,7 @@ public:
 
 	void setup(System &ab,Ship &ship);
 	void step();
-	void draw(int8_t selected);
+	void draw(int8_t selected,int16_t offset);
 };
 PeepControl::PeepControl(System &ab,Ship &ship)
 {
@@ -205,10 +205,10 @@ void PeepControl::step()
 	}
 }
 
-void PeepControl::draw(int8_t selected)
+void PeepControl::draw(int8_t selected,int16_t offset)
 {
 	for(uint8_t i=0; i<peeps.GetCount(); ++i)
 	{
-		peeps[i].draw(i==selected);
+		peeps[i].draw(i==selected,offset);
 	}
 }

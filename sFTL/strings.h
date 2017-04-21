@@ -3,12 +3,12 @@
 //Menu stuff
 const PROGMEM char pageShip[] = "Ship";
 const PROGMEM char pagePeeps[]= "Crew";
-const PROGMEM char pageTarget[]= "Target";
 const PROGMEM char pageDunno[]= "???";
+const PROGMEM char pageTarget[]= "Target";
 const PROGMEM char pageWarp[] = "Travel";
 
 const char* const pageNames[] PROGMEM = {
-	pageShip,pagePeeps,pageTarget,pageDunno,pageWarp
+	pageShip,pagePeeps,pageDunno,pageTarget,pageWarp
 };
 
 //Ship bits
