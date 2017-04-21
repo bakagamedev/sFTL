@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Utils.h"
+#include "..\Utils.h"
 
 //
 // Declaration
@@ -18,9 +18,7 @@ namespace Ardutils
 		StaticClampedValue(const TValue & value);
 
 		TValue GetValue(void) const;
-
 		TValue GetMin(void) const;
-
 		TValue GetMax(void) const;
 
 		operator TValue(void) const;
@@ -28,11 +26,9 @@ namespace Ardutils
 		StaticClampedValue<TValue, Min, Max> & operator =(const TValue & value);
 
 		StaticClampedValue<TValue, Min, Max> & operator +=(const TValue & value);
-
 		StaticClampedValue<TValue, Min, Max> & operator -=(const TValue & value);
 
 		StaticClampedValue<TValue, Min, Max> & operator ++(void);
-
 		StaticClampedValue<TValue, Min, Max> & operator --(void);
 	};
 }

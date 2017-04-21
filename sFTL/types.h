@@ -1,6 +1,5 @@
 #pragma once
-#include "ardutils/Point2.h"
-#include "ardutils/Rectangle.h"
+#include "ardutils/Geometry.h"
 
 using ByteRectangle = Ardutils::Rectangle<int8_t,int8_t>;
 using BytePoint = Ardutils::Point2<uint8_t>;

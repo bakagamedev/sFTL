@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../CStdDef.h"
+#include "../BasicTypes.h"
 
 //
 // RemoveAllExtents

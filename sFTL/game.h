@@ -1,5 +1,5 @@
 #pragma once	
-#include "Ardutils/StaticWrappedValue.h"
+#include "Ardutils/Maths.h"
 #include "sprites.h"
 #include "strings.h"
 #include "system.h"

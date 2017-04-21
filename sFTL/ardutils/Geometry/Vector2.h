@@ -22,7 +22,6 @@ namespace Ardutils
 		float Magnitude(void) const;
 		TValue MagnitudeSquared(void) const;
 
-		// Member operators because these modify state
 		Vector2<TValue> & operator +=(const Vector2<TValue> & other);
 		Vector2<TValue> & operator -=(const Vector2<TValue> & other);
 		Vector2<TValue> & operator *=(const TValue & value);

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Utils.h"
+#include "..\Utils.h"
 
 //
 // Declaration
@@ -20,27 +20,21 @@ namespace Ardutils
 		ClampedValue(const TValue & value, const TValue & min, const TValue & max);
 
 		TValue GetValue(void) const;
-
 		TValue GetMin(void) const;
-
 		TValue GetMax(void) const;
 
 		void SetValue(const TValue & value);
-
 		void SetMin(const TValue & value);
-
 		void SetMax(const TValue & value);
 
 		operator TValue(void) const;
 
 		ClampedValue<TValue> & operator =(const TValue & value);
-
+		
 		ClampedValue<TValue> & operator +=(const TValue & value);
-
 		ClampedValue<TValue> & operator -=(const TValue & value);
 
 		ClampedValue<TValue> & operator ++(void);
-
 		ClampedValue<TValue> & operator --(void);
 	};
 }

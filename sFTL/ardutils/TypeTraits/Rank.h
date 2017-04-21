@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IntegralConstant.h"
-#include "../CStdDef.h"
+#include "../BasicTypes.h"
 
 #include "../Details/VersioningStart.h"
 

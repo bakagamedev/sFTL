@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Debug.h"
-#include "Utils.h"
+#include "..\Debug.h"
+#include "..\Utils.h"
 
 //
 // Declaration
@@ -20,11 +20,9 @@ namespace Ardutils
 		Range(const TValue & min, const TValue & max);
 
 		TValue GetMin(void) const;
-
 		TValue GetMax(void) const;
 
 		void SetMin(const TValue & min);
-
 		void SetMax(const TValue & max);
 
 		TValue Clamp(const TValue & value) const;

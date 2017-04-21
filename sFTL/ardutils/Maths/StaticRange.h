@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Utils.h"
+#include "..\Utils.h"
 
 //
 // Declaration
@@ -13,7 +13,6 @@ namespace Ardutils
 	{
 	public:
 		TValue GetMin(void) const;
-
 		TValue GetMax(void) const;
 
 		TValue Clamp(const TValue & value) const;

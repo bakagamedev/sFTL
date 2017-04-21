@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Utils.h"
+#include "..\Utils.h"
 
 #include "Point2.h"
 #include "Vector2.h"
