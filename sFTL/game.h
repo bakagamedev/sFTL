@@ -1,5 +1,6 @@
 #pragma once	
 #include "Ardutils/StaticWrappedValue.h"
+#include "sprites.h"
 #include "strings.h"
 #include "system.h"
 #include "ship.h"
@@ -118,12 +119,15 @@ void Game::draw()
 			if(page != 1) sel = -1;
 			peeps.draw(sel,pos);
 		}
+
+		ab->drawBitmap(120+cameraX,0,uiEnemyShip,8,64);
 	}
 	else
 	{
 		pos = (-cameraX)-256;
-		ab->fillRect(pos,16,64,32,0);
-		ab->drawRect(pos,16,64,32,1);
+		playerShip.draw(0,pos);
+		//ab->fillRect(pos,16,64,32,0);
+		//ab->drawRect(pos,16,64,32,1);
 	}
 
 	drawBar();
@@ -177,7 +181,7 @@ void Game::drawInfo()
 
 void Game::drawBar()
 {
-	const uint8_t startx = 44;
+	const uint8_t startx = 38;
 	const uint8_t starty = 56;
 
 	ab->fillRect(startx+(page*16),starty,16,8,1);
