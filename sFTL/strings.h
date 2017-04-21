@@ -18,9 +18,10 @@ const PROGMEM char nameSickbay[]= "Sickbay";
 const PROGMEM char nameWeapons[]= "Weapons";
 const PROGMEM char nameShield[] = "Shield";
 const PROGMEM char nameEngine[] = "Engine";
+const PROGMEM char nameOxygen[] = "Oxygen";
 
 const char* const nameShipParts[] PROGMEM = {	//Make sure to line this up with enum RoomType in types.h
-	nameEmpty,nameBridge,nameSickbay,nameWeapons,nameShield,nameEngine
+	nameEmpty,nameBridge,nameSickbay,nameWeapons,nameShield,nameEngine,nameOxygen
 };
 
 ///Crew names

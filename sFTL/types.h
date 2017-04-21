@@ -28,9 +28,8 @@ enum class Species : uint8_t
 
 enum class ShipType : uint8_t
 {
-	kestrel,
-	ship1,
-	ship2,
+	Kestrel,
+	Engi,
 };
 
 enum class RoomType : uint8_t
@@ -41,5 +40,6 @@ enum class RoomType : uint8_t
 	weapons = 3,
 	shield = 4,
 	engine = 5,
+	oxygen = 6,
 };
 

@@ -45,7 +45,8 @@ Game::Game(System & ab)
 {
 	this->ab = &ab;
 
-	playerShip.setType(ShipType::kestrel);
+	playerShip.setType(ShipType::Kestrel);
+	enemyShip.setType(ShipType::Engi);
 
 	peeps.add();
 	peeps.add();
@@ -126,7 +127,7 @@ void Game::draw()
 	else
 	{
 		pos = (-cameraX)-256;
-		playerShip.draw(0,pos);
+		enemyShip.draw(-1,pos);
 		//ab->fillRect(pos,16,64,32,0);
 		//ab->drawRect(pos,16,64,32,1);
 	}

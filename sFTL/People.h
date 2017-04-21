@@ -66,7 +66,7 @@ void Peep::update()
 	--count;
 	if((count < 0) && (destination == position))		//If standing still, walk to a random room
 	{
-		roomID = random(0,5);	//Pick random room
+		roomID = random(0,6);	//Pick random room
 		//roomID = ship->roomIDFromType(RoomType::bridge);	//Spawn on the bridge
 		roomData = ship->roomFromID(roomID);
 		setDestination(roomData.shape.X+8,roomData.shape.Y+8);

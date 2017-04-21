@@ -104,13 +104,30 @@ void Ship::setType(ShipType type)
 {
 	this->type = type;
 
-	rooms.Add(ShipRoom(RoomType::bridge,Rectangle(80,16,16,24)));	//Bridge
-	rooms.Add(ShipRoom(RoomType::sickbay,Rectangle(64,16,16,24)));	//Medbay
-	rooms.Add(ShipRoom(RoomType::shield,Rectangle(32,16,32,12)));	//Shield
-	rooms.Add(ShipRoom(RoomType::weapons,Rectangle(32,28,32,12)));	//Weapons
-	rooms.Add(ShipRoom(RoomType::engine,Rectangle(16,16,16,24)));	//Engine
-	rooms.Add(ShipRoom(RoomType::empty,Rectangle(0,40,48,16)));		//Right Strut
-	rooms.Add(ShipRoom(RoomType::empty,Rectangle(0,0,48,16)));		//Left Strut
+	switch(type)
+	{
+		case ShipType::Kestrel:
+		{
+			rooms.Add(ShipRoom(RoomType::bridge,Rectangle(80,16,16,24)));	//Bridge
+			rooms.Add(ShipRoom(RoomType::sickbay,Rectangle(64,16,16,12)));	//Shield
+			rooms.Add(ShipRoom(RoomType::oxygen,Rectangle(64,28,16,12)));	//Weapons
+			rooms.Add(ShipRoom(RoomType::weapons,Rectangle(48,16,16,24)));	//Medbay
+			rooms.Add(ShipRoom(RoomType::shield,Rectangle(32,16,16,24)));	//Oxygen room
+			rooms.Add(ShipRoom(RoomType::engine,Rectangle(16,16,16,24)));	//Engine
+			rooms.Add(ShipRoom(RoomType::empty,Rectangle(0,40,48,16)));		//Right Strut
+			rooms.Add(ShipRoom(RoomType::empty,Rectangle(0,0,48,16)));		//Left Strut
+		}; break;
+		case ShipType::Engi:
+		{
+			rooms.Add(ShipRoom(RoomType::bridge,Rectangle(32,32,12,12)));	//Bridge
+			rooms.Add(ShipRoom(RoomType::sickbay,Rectangle(24,32,12,12)));	//Sickbay
+			rooms.Add(ShipRoom(RoomType::weapons,Rectangle(24,12,16,24)));	//Bridge
+			rooms.Add(ShipRoom(RoomType::oxygen,Rectangle(12,12,12,12)));	//Bridge
+			rooms.Add(ShipRoom(RoomType::engine,Rectangle(0,24,16,12)));	//Bridge
+			rooms.Add(ShipRoom(RoomType::shield,Rectangle(12,32,12,12)));	//Bridge
+
+		}; break;
+	}
 
 	roomNum = rooms.GetCount();
 };
