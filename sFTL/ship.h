@@ -7,7 +7,7 @@
 struct Rectangle : public ByteRectangle
 {
 public:
-	set(const uint8_t x,const uint8_t y,const uint8_t width,const uint8_t height)
+	void set(const uint8_t x,const uint8_t y,const uint8_t width,const uint8_t height)
 	{
 		this->X = x;
 		this->Y = y;
@@ -59,7 +59,7 @@ private:
 public:
 	uint8_t roomNum = 0;
 
-	char* getRoomName(uint8_t id);
+	void getRoomName(uint8_t id,char *name);
 
 	Ship(System &ab);
 	void setType(ShipType type);
@@ -76,14 +76,12 @@ Ship::Ship(System &ab)
 	this->ab = &ab;
 };
 
-char* Ship::getRoomName(uint8_t id)
+void Ship::getRoomName(uint8_t id,char* name)
 {
 	if(id<rooms.GetCount())
 	{
 		uint8_t type = (uint8_t)(rooms[id].type);
-		char name[8];
 		strcpy_P(name, (char*)pgm_read_word(&(nameShipParts[type])));
-		return name;
 	}
 };
 
