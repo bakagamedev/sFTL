@@ -12,6 +12,7 @@ private:
 	Ship *ship;
 
 	Species species;
+
 	BytePoint position;
 	BytePoint destination;
 
@@ -19,15 +20,15 @@ private:
 
 	uint8_t roomID = 0;
 
-	bool moved = false;
 	//Stats!
 	//Stat statFixing = Stat(1,0,5);
 	//Stat statPilot = Stat(1,0,5);
 	//Stats!
 public:
 	char name[8];
+	
+	ByteClamped hp = ByteClamped(100,0,100);
 
-	int8_t hp = 100;
 	bool alive = false;
 
 	Peep(void) = default;
@@ -58,6 +59,7 @@ Peep::Peep(System &ab,Ship &ship)
 void Peep::update()
 {
 	ShipRoom roomData;
+	bool moved = false;
 
 	/* test code */
 	--count;
@@ -89,12 +91,10 @@ void Peep::update()
 		moved = true;
 	}
 	//As long as ship designs stay rectangley, they shouldn't walk out of bounds
-
 	if(moved)
 	{
 		roomID = ship->roomIDFromPoint(position);
 		roomData = ship->roomFromID(roomID);
-		moved = false;
 	}
 }
 
@@ -114,7 +114,6 @@ void Peep::setPos(uint8_t x,uint8_t y)
 {
 	this->position.X = x;
 	this->position.Y = y;
-	moved = true;
 }
 
 BytePoint Peep::getPos()

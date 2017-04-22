@@ -14,8 +14,7 @@ private:
 	System *ab;
 
 	Ardutils::StaticWrappedValue<uint8_t,0,4> page;
-	Ardutils::ClampedValue<uint8_t> selected = Ardutils::ClampedValue<uint8_t>(0,0,1);
-
+	ByteClamped selected = ByteClamped(0,0,1);
 
 	int16_t cameraX = 0;
 	int8_t warp=0;
@@ -81,19 +80,15 @@ void Game::step()
 
 		if(ab->justPressed(UP_BUTTON))	{	if(page<2) ++selected;	}
 		if(ab->justPressed(DOWN_BUTTON)){	if((page<2)&&(selected>0)) --selected;	}
-	}
 
+		if(ab->justPressed(A_BUTTON))
+		{
+			if (page == 4)	{	warp = 1; }
+		}
+	}
 
 	if(page==3)	{	cameraX = min(cameraX+2,192);	}
 	else	{	cameraX = max(cameraX-2,0);	}
-
-	if(selected<0) selected=0;	
-
-
-	if((ab->justPressed(A_BUTTON)) && (page == 4))
-	{
-		warp = 1;
-	}
 
 	playerShip.step();
 	peeps.step();
