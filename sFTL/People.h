@@ -153,13 +153,14 @@ private:
 	PeepList peeps;
 
 public:
-	int8_t peepNum = 0;
 	PeepControl(System &ab,Ship &ship);
 
 	void getName(uint8_t id,char *name);
 
 	void add();
 	void kill(uint8_t id);
+
+	uint8_t GetPeepCount();
 
 	void setup(System &ab,Ship &ship);
 	void step();
@@ -173,23 +174,26 @@ PeepControl::PeepControl(System &ab,Ship &ship)
 
 void PeepControl::getName(uint8_t id,char *name)
 {
-	if(id<peepNum)
+	if(id<peeps.GetCount())
 	{
 		//return peeps[id].name;
 		strcpy(name,peeps[id].name);
 	}
 };
 
+uint8_t PeepControl::GetPeepCount()
+{
+	return peeps.GetCount();
+}
+
 void PeepControl::add()
 {
 	peeps.Add(Peep(*ab,*ship));
-	peepNum = peeps.GetCount();
 };
 
 void PeepControl::kill(uint8_t id)
 {
 	peeps.RemoveAt(id);
-	peepNum = peeps.GetCount();
 }
 
 void PeepControl::step()

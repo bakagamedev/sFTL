@@ -73,7 +73,7 @@ void Game::step()
 			switch(page)
 			{
 				case 0:	{	valueMax = playerShip.roomNum;	}; break;
-				case 1:	{	valueMax = peeps.peepNum;	}; break;
+				case 1:	{	valueMax = peeps.GetPeepCount();	}; break;
 			}
 			selected.SetMax(valueMax);
 		}	
