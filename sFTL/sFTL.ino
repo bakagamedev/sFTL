@@ -10,6 +10,16 @@ void setup()
 {
 	ab.begin();	
   	Serial.begin(9600);
+
+  	/*
+  	int8_t logoY=-64;
+  	while(int8_t < 0)
+  	{
+  		while(!ab.nextFrame())	{	};
+  		ab.drawBitmap(0,logoY,uiLogo,128,64);
+  		ab.display();
+  	}
+  	*/
 }
 
 void loop()
