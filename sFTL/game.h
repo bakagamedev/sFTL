@@ -57,18 +57,18 @@ Game::Game(System & ab)
 
 void Game::step()
 {
-	if(warp!=0)
+	if(warp!=0)	
 	{	
 		warp++;
-		if(warp==127)	//rejig star positions when ship is  offscreen
-			background.reset();
+		if(warp==127)	//stupid optimisation idea; replace with overflow flag check
+			background.reset();	//rejig star positions when ship is  offscreen
 	}
 	else	//Allow inputs when not travelling
 	{
 		if(selected==0)
 		{
-			if(ab->justPressed(LEFT_BUTTON)){	page--;	selected = 0; }
-			if(ab->justPressed(RIGHT_BUTTON)){	page++;	selected = 0; }
+			if(ab->justPressed(LEFT_BUTTON)){	--page;	}
+			if(ab->justPressed(RIGHT_BUTTON)){	++page;	}
 
 			uint8_t valueMax = 0;
 			switch(page)
@@ -79,8 +79,8 @@ void Game::step()
 			selected.SetMax(valueMax);
 		}	
 
-		if(ab->justPressed(UP_BUTTON))	{	if(page<2) selected++;	}
-		if(ab->justPressed(DOWN_BUTTON)){	if((page<2)&&(selected>0)) selected--;	}
+		if(ab->justPressed(UP_BUTTON))	{	if(page<2) ++selected;	}
+		if(ab->justPressed(DOWN_BUTTON)){	if((page<2)&&(selected>0)) --selected;	}
 	}
 
 
@@ -110,7 +110,7 @@ void Game::draw()
 	if(page != 0 ) sel = -1;
 
 	int8_t pos;
-	if(cameraX<128)
+	if(cameraX<128)	//If looking at player ship
 	{
 		pos = -cameraX;
 		playerShip.draw(sel,pos+warp);
@@ -125,7 +125,7 @@ void Game::draw()
 		//if(enemyShip.hp > 0)
 		ab->drawBitmap(120+cameraX,0,uiEnemyShip,8,64);
 	}
-	else
+	else	//If looking at enemy ship
 	{
 		pos = (-cameraX)-256;
 		enemyShip.draw(-1,pos);
@@ -149,8 +149,9 @@ void Game::stepInfo()
 		{
 			case 0:
 			{
-				char* temp = playerShip.getRoomName(selected-1);
-				strcpy(screentext2,temp);
+				//char* temp[8];
+				playerShip.getRoomName(selected-1,screentext2);
+				//strcpy(screentext2,temp);
 			}; break;
 			case 1:
 			{
