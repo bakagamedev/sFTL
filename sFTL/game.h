@@ -155,8 +155,8 @@ void Game::stepInfo()
 			}; break;
 			case 1:
 			{
-				char* temp = peeps.getName(selected-1);
-				strcpy(screentext2,temp);
+				peeps.getName(selected-1,screentext2);
+				//strcpy(screentext2,temp);
 			}; break;
 		}
 		drawText2 = true;		

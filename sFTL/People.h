@@ -18,7 +18,6 @@ private:
 	int8_t count = 10;
 
 	uint8_t roomID = 0;
-	ShipRoom roomData;
 
 	bool moved = false;
 	//Stats!
@@ -58,6 +57,8 @@ Peep::Peep(System &ab,Ship &ship)
 
 void Peep::update()
 {
+	ShipRoom roomData;
+
 	/* test code */
 	--count;
 	if((count < 0) && (destination == position))		//If standing still, walk to a random room
@@ -100,6 +101,7 @@ void Peep::update()
 void Peep::reset()
 {
 	roomID = random(0,6);	//ship->roomIDFromType(RoomType::bridge);	//Spawn on the bridge
+	ShipRoom roomData;
 	roomData = ship->roomFromID(roomID);
 	position.X = roomData.shape.X + (roomData.shape.Width / 2);
 	position.Y = roomData.shape.Y + (roomData.shape.Height / 2);
@@ -155,7 +157,7 @@ public:
 	int8_t peepNum = 0;
 	PeepControl(System &ab,Ship &ship);
 
-	char* getName(uint8_t id);
+	void getName(uint8_t id,char *name);
 
 	void add();
 	void kill(uint8_t id);
@@ -170,11 +172,12 @@ PeepControl::PeepControl(System &ab,Ship &ship)
 	this->ship = &ship;	
 };
 
-char* PeepControl::getName(uint8_t id)
+void PeepControl::getName(uint8_t id,char *name)
 {
 	if(id<peepNum)
 	{
-		return peeps[id].name;
+		//return peeps[id].name;
+		strcpy(name,peeps[id].name);
 	}
 };
 
