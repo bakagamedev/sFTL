@@ -28,12 +28,7 @@ Background::Background(System &ab)
 
 void Background::reset(BackgroundType type)
 {
-	this->type = type;
-	reset(); 
-}
-
-void Background::reset()
-{
+	this->type = type;	
 	for(uint8_t i=0; i<starNum; ++i)
 	{
 		stars[i].x = random(128);
@@ -41,12 +36,17 @@ void Background::reset()
 	}
 }
 
+void Background::reset()
+{
+	reset(BackgroundType::Stars);	//Default for maximum lazy
+}
+
 void Background::draw()
 {
 	for(uint8_t i=0; i<starNum; ++i)
 		ab->drawPixel(stars[i].x,stars[i].y,1);
 
-	switch(BackgroundType)
+	switch(type)
 	{
 		case BackgroundType::Planet:
 		{

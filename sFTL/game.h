@@ -43,6 +43,7 @@ public:
 Game::Game(System & ab)
 {
 	this->ab = &ab;
+	background.reset(BackgroundType::Planet);
 
 	playerShip.setType(ShipType::Kestrel);
 	enemyShip.setType(ShipType::Engi);
@@ -95,17 +96,19 @@ void Game::step()
 		peeps.step();
 	}
 
-
 	stepInfo();
 };
 
 void Game::draw()
 {
 	ab->clear();
-	
+
 	background.draw();
 
 	//Foreground
+	int8_t sel = (selected-1);
+	if(page != 0)	{	sel = -1;	}
+	
 	int8_t pos;
 	if(cameraX<128)	//If looking at player ship
 	{
@@ -114,7 +117,7 @@ void Game::draw()
 
 		if(warp == 0)
 		{
-			int8_t sel = selected-1;
+			sel = selected-1;
 			if(page != 1) sel = -1;
 			peeps.draw(sel,pos);
 		}
@@ -127,7 +130,7 @@ void Game::draw()
 	{
 		pos = (-cameraX)-256;	//-256 should  move it into [-127,127] range
 
-		int8_t sel = selected-1;
+		sel = selected-1;
 		if(page != 3) sel = -1;
 		enemyShip.draw(sel,pos);
 	}
