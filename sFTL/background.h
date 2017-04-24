@@ -1,5 +1,6 @@
 #pragma once
 #include "system.h"
+#include "types.h"
 
 #define starNum 15
 
@@ -8,10 +9,12 @@ class Background
 private:
 	System *ab;
 	Point stars[starNum];
+	BackgroundType type;
 public:
 	Background(System &ab);
 
 	void reset();
+	void reset(BackgroundType type);
 	void draw();
 };
 
@@ -22,6 +25,12 @@ Background::Background(System &ab)
 	reset();	//first attempt always ends up with weird clumps. 
 	reset();
 };
+
+void Background::reset(BackgroundType type)
+{
+	this->type = type;
+	reset(); 
+}
 
 void Background::reset()
 {
@@ -36,4 +45,12 @@ void Background::draw()
 {
 	for(uint8_t i=0; i<starNum; ++i)
 		ab->drawPixel(stars[i].x,stars[i].y,1);
+
+	switch(BackgroundType)
+	{
+		case BackgroundType::Planet:
+		{
+			ab->drawCircle(128,64,32,1);
+		}; break;
+	}
 };

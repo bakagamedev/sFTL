@@ -5,6 +5,7 @@ using ByteClamped = Ardutils::ClampedValue<uint8_t>;
 using ByteRectangle = Ardutils::Rectangle<int8_t,int8_t>;
 using BytePoint = Ardutils::Point2<uint8_t>;
 
+//Game state
 enum class State : uint8_t
 {
 	menu,
@@ -20,6 +21,14 @@ enum class Page : uint8_t
 	travel,
 };
 
+//Environment
+enum class BackgroundType : uint8_t
+{
+	Stars,
+	Planet,
+};
+
+//Ship bits and pieces
 enum class Species : uint8_t
 {
 	human,
