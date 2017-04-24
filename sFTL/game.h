@@ -56,9 +56,13 @@ Game::Game(System & ab)
 
 void Game::step()
 {
+	if(page==3)	{	cameraX = min(cameraX+2,192);	}
+	else		{	cameraX = max(cameraX-2,0);	}
+
 	if(warp!=0)	
 	{	
-		warp++;
+		if(cameraX==0)	//Wait until camera is looking at ship
+			warp++;
 		if(warp==127)	//stupid optimisation idea; replace with overflow flag check
 			background.reset();	//rejig star positions when ship is  offscreen
 	}
@@ -74,6 +78,7 @@ void Game::step()
 			{
 				case 0:	{	valueMax = playerShip.roomNum;	}; break;
 				case 1:	{	valueMax = peeps.GetPeepCount();	}; break;
+				case 3:	{	valueMax = enemyShip.roomNum;	};	break;
 			}
 			selected.SetMax(valueMax);
 		}	
@@ -85,13 +90,11 @@ void Game::step()
 		{
 			if (page == 4)	{	warp = 1; }
 		}
+
+		playerShip.step();
+		peeps.step();
 	}
 
-	if(page==3)	{	cameraX = min(cameraX+2,192);	}
-	else	{	cameraX = max(cameraX-2,0);	}
-
-	playerShip.step();
-	peeps.step();
 
 	stepInfo();
 };
@@ -99,11 +102,10 @@ void Game::step()
 void Game::draw()
 {
 	ab->clear();
+	
 	background.draw();
 
-	int8_t sel = selected-1;
-	if(page != 0 ) sel = -1;
-
+	//Foreground
 	int8_t pos;
 	if(cameraX<128)	//If looking at player ship
 	{
@@ -112,22 +114,25 @@ void Game::draw()
 
 		if(warp == 0)
 		{
-			sel = selected-1;
+			int8_t sel = selected-1;
 			if(page != 1) sel = -1;
 			peeps.draw(sel,pos);
 		}
 
+		//Draw enemy ship indicator
 		//if(enemyShip.hp > 0)
 		ab->drawBitmap(120+cameraX,0,uiEnemyShip,8,64);
 	}
 	else	//If looking at enemy ship
 	{
-		pos = (-cameraX)-256;
-		enemyShip.draw(-1,pos);
-		//ab->fillRect(pos,16,64,32,0);
-		//ab->drawRect(pos,16,64,32,1);
+		pos = (-cameraX)-256;	//-256 should  move it into [-127,127] range
+
+		int8_t sel = selected-1;
+		if(page != 3) sel = -1;
+		enemyShip.draw(sel,pos);
 	}
 
+	//Hud
 	drawBar();
 	drawInfo();
 };
