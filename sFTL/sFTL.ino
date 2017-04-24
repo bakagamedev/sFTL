@@ -12,6 +12,7 @@ void setup()
 	ab.begin();	
   	Serial.begin(9600);
 
+  	/*
   	int8_t logoY=-64;
   	while(logoY++ < 64)
   	{
@@ -21,6 +22,7 @@ void setup()
   		ab.drawCompressed(0,min(logoY,0),uiLogo,1);
   		ab.display();
   	}
+  	*/
 }
 
 void loop()
